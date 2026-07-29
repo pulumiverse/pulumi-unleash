@@ -20,3 +20,10 @@ func TestBasicTs(t *testing.T) {
 
 	integration.ProgramTest(t, &opts)
 }
+
+func TestOssTs(t *testing.T) {
+	test := getJSBaseOptions(t).With(integration.ProgramTestOptions{
+		Dir: filepath.Join(getCwd(t), "oss-ts"),
+	})
+	integration.ProgramTest(t, &test)
+}
