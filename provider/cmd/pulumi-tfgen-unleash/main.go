@@ -15,9 +15,9 @@
 package main
 
 import (
-	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
-
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen"
+
+	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
 )
 
 func main() {

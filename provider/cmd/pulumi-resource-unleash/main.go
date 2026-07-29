@@ -19,9 +19,9 @@ import (
 
 	_ "embed"
 
-	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
-
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
+
+	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
 )
 
 //go:embed schema.json

@@ -21,11 +21,12 @@ import (
 	_ "embed"
 
 	unleashshim "github.com/Unleash/terraform-provider-unleash/shim"
-	"github.com/hagaym1/pulumi-unleash/provider/v3/pkg/version"
 
 	pfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
+
+	"github.com/hagaym1/pulumi-unleash/provider/v3/pkg/version"
 )
 
 // all of the token components used below.
