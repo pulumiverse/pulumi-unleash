@@ -26,7 +26,6 @@ import (
 	pfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
-	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 // all of the token components used below.
@@ -51,10 +50,10 @@ func Provider() tfbridge.ProviderInfo {
 		Version: version.Version,
 		// DisplayName is a way to be able to change the casing of the provider name when being
 		// displayed on the Pulumi registry
-		DisplayName: "",
+		DisplayName: "Unleash",
 		// Change this to your personal name (or a company name) that you would like to be shown in
 		// the Pulumi Registry if this package is published there.
-		Publisher: "Pulumi",
+		Publisher: "Pulumiverse",
 		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
 		// if this package is published there.
 		//
@@ -72,28 +71,21 @@ func Provider() tfbridge.ProviderInfo {
 		Keywords:   []string{"unleash", "category/cloud"},
 		License:    "Apache-2.0",
 		Homepage:   "https://www.pulumi.com",
-		Repository: "https://github.com/hagaym1/pulumi-unleash",
+		Repository: "https://github.com/pulumiverse/pulumi-unleash",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this should
 		// match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:    "",
+		GitHubOrg:    "Unleash",
 		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
 		Config: map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			"region": {
-				Type: "unleash:region/region:Region",
+			"base_url": {
+				Default: &tfbridge.DefaultInfo{EnvVars: []string{"UNLEASH_URL"}},
 			},
-		},
-		// If extra types are needed for configuration, they can be added here.
-		ExtraTypes: map[string]schema.ComplexTypeSpec{
-			"unleash:region/region:Region": {
-				ObjectTypeSpec: schema.ObjectTypeSpec{
-					Type: "string",
-				},
-				Enum: []schema.EnumValueSpec{
-					{Name: "here", Value: "HERE"},
-					{Name: "overThere", Value: "OVER_THERE"},
-				},
+			"authorization": {
+				Secret:  tfbridge.True(),
+				Default: &tfbridge.DefaultInfo{EnvVars: []string{"UNLEASH_AUTH_TOKEN"}},
+			},
+			"max_concurrent_requests": {
+				Default: &tfbridge.DefaultInfo{EnvVars: []string{"UNLEASH_MAX_CONCURRENT_REQUESTS"}},
 			},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
@@ -139,7 +131,6 @@ func Provider() tfbridge.ProviderInfo {
 	prov.MustComputeTokens(tokens.SingleModule("unleash_", mainMod,
 		tokens.MakeStandard(mainPkg)))
 
-	prov.MustApplyAutoAliases()
 	prov.SetAutonaming(255, "-")
 
 	return prov
