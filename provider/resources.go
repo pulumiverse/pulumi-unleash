@@ -26,7 +26,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	unleash "github.com/Unleash/terraform-provider-unleash/provider" // Import the upstream provider
 
-	"github.com/hagaym1/pulumi-unleash/provider/pkg/version"
+	"github.com/hagaym1/pulumi-unleash/provider/v3/pkg/version"
 )
 
 // all of the token components used below.

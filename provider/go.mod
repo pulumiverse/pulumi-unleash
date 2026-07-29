@@ -1,11 +1,11 @@
-module github.com/hagaym1/pulumi-unleash/provider
+module github.com/hagaym1/pulumi-unleash/provider/v3
 
-go 1.25.11
+go 1.24.0
 
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20260318212141-5525259d096b
 
 require (
-	github.com/Unleash/terraform-provider-unleash v1.4.1
+	github.com/Unleash/terraform-provider-unleash v1.4.2-0.20260729103411-faf2a31bae93
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.135.0
 	github.com/pulumi/pulumi/pkg/v3 v3.254.0
 )

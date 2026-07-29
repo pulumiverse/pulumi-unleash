@@ -2710,6 +2710,8 @@ github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWX
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/Unleash/terraform-provider-unleash v1.4.1 h1:wdACtEoPsp1BN+5zq9o+sByWC3GNbhawmVC/pALJhuc=
 github.com/Unleash/terraform-provider-unleash v1.4.1/go.mod h1:OhzAjEljNcX/fwyiI6Fhg+p/j/7IpJakNKbvs1PY9EI=
+github.com/Unleash/terraform-provider-unleash v1.4.2-0.20260729103411-faf2a31bae93 h1:5vlcv0DRtsS3MHtvbf0TDXecS1d7gBsHgS3V6dJfGkQ=
+github.com/Unleash/terraform-provider-unleash v1.4.2-0.20260729103411-faf2a31bae93/go.mod h1:wEMs3lE/3l1W5F2Hx6etZ6HGdZc/MWvvwVUkrlAgQSg=
 github.com/Unleash/unleash-server-api-go v0.5.4 h1:sq4TyDxCqAjrn0YJh34wvsEZd7eoQ5F8ErXDwyCoIzI=
 github.com/Unleash/unleash-server-api-go v0.5.4/go.mod h1:/IvCtBfBrOVOa67elCLig45kt6NYkk79oxmRW80WOFY=
 github.com/VividCortex/gohistogram v1.0.0/go.mod h1:Pf5mBqqDxYaXu3hDrrU+w6nw50o/4+TcAqDqk/vUH7g=
