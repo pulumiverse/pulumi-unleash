@@ -113,6 +113,21 @@ func Provider() tfbridge.ProviderInfo {
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 		},
+		Resources: map[string]*tfbridge.ResourceInfo{
+			// Upstream "id" is a computed-only Int64Attribute; Pulumi ids must be
+			// strings. Coercible types just need a SchemaInfo.Type override (bridge
+			// pkg/pf/tfbridge/ids.go stringifies the value at runtime) - no ComputeID.
+			"unleash_service_account": {
+				Fields: map[string]*tfbridge.SchemaInfo{
+					"id": {Type: "string"},
+				},
+			},
+			"unleash_service_account_token": {
+				Fields: map[string]*tfbridge.SchemaInfo{
+					"id": {Type: "string"},
+				},
+			},
+		},
 		CSharp: &tfbridge.CSharpInfo{
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,

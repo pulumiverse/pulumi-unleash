@@ -1,15 +1,16 @@
 {
-    "name": "xyz",
-    "description": "A Pulumi package for creating and managing xyz cloud resources.",
+    "name": "unleash",
+    "displayName": "Unleash",
+    "description": "A Pulumi package for creating and managing unleash cloud resources.",
     "keywords": [
-        "xyz",
+        "unleash",
         "category/cloud"
     ],
     "homepage": "https://www.pulumi.com",
     "license": "Apache-2.0",
-    "attribution": "This Pulumi package is based on the [`xyz` Terraform Provider](https://github.com/terraform-providers/terraform-provider-xyz).",
-    "repository": "https://github.com/pulumi/pulumi-xyz",
-    "publisher": "Pulumi",
+    "attribution": "This Pulumi package is based on the [`unleash` Terraform Provider](https://github.com/Unleash/terraform-provider-unleash).",
+    "repository": "https://github.com/pulumiverse/pulumi-unleash",
+    "publisher": "Pulumiverse",
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"
     },
@@ -22,20 +23,20 @@
             "respectSchemaVersion": true
         },
         "go": {
-            "importBasePath": "github.com/pulumi/pulumi-xyz/sdk/go/xyz",
+            "importBasePath": "github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash",
             "generateResourceContainerTypes": true,
             "generateExtraInputTypes": true,
             "respectSchemaVersion": true
         },
         "nodejs": {
-            "packageDescription": "A Pulumi package for creating and managing xyz cloud resources.",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-xyz)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-xyz` repo](https://github.com/pulumi/pulumi-xyz/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-xyz` repo](https://github.com/terraform-providers/terraform-provider-xyz/issues).",
+            "packageDescription": "A Pulumi package for creating and managing unleash cloud resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/Unleash/terraform-provider-unleash)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-unleash` repo](https://github.com/pulumiverse/pulumi-unleash/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-unleash` repo](https://github.com/Unleash/terraform-provider-unleash/issues).",
             "compatibility": "tfbridge20",
             "disableUnionOutputTypes": true,
             "respectSchemaVersion": true
         },
         "python": {
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-xyz)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-xyz` repo](https://github.com/pulumi/pulumi-xyz/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-xyz` repo](https://github.com/terraform-providers/terraform-provider-xyz/issues).",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/Unleash/terraform-provider-unleash)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-unleash` repo](https://github.com/pulumiverse/pulumi-unleash/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-unleash` repo](https://github.com/Unleash/terraform-provider-unleash/issues).",
             "compatibility": "tfbridge20",
             "respectSchemaVersion": true,
             "pyproject": {
@@ -45,68 +46,1259 @@
     },
     "config": {
         "variables": {
-            "region": {
+            "authorization": {
                 "type": "string",
-                "$ref": "#/types/xyz:region/region:Region",
-                "description": "A region which should be used."
+                "description": "Authorization token for Unleash API",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_AUTH_TOKEN"
+                    ]
+                },
+                "secret": true
+            },
+            "baseUrl": {
+                "type": "string",
+                "description": "Unleash base URL (everything before `/api`)",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_URL"
+                    ]
+                }
+            },
+            "maxConcurrentRequests": {
+                "type": "integer",
+                "description": "Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to \u003cspan pulumi-lang-nodejs=\"`2`\" pulumi-lang-dotnet=\"`2`\" pulumi-lang-go=\"`2`\" pulumi-lang-python=\"`2`\" pulumi-lang-yaml=\"`2`\" pulumi-lang-java=\"`2`\" pulumi-lang-hcl=\"`2`\"\u003e`2`\u003c/span\u003e, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`.",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_MAX_CONCURRENT_REQUESTS"
+                    ]
+                }
             }
         }
     },
     "types": {
-        "xyz:region/region:Region": {
-            "type": "string",
-            "enum": [
-                {
-                    "name": "here",
-                    "value": "HERE"
+        "unleash:index/ContextFieldLegalValue:ContextFieldLegalValue": {
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the allowed value.\n"
                 },
-                {
-                    "name": "overThere",
-                    "value": "OVER_THERE"
+                "value": {
+                    "type": "string",
+                    "description": "The allowed value.\n"
                 }
+            },
+            "type": "object",
+            "required": [
+                "value"
             ]
+        },
+        "unleash:index/ProjectAccessRole:ProjectAccessRole": {
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "List of projects with this role assigned.\n"
+                },
+                "role": {
+                    "type": "integer",
+                    "description": "The role identifier.\n"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "List of users with this role assigned.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "groups",
+                "role",
+                "users"
+            ]
+        },
+        "unleash:index/ProjectFeatureNaming:ProjectFeatureNaming": {
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A human-readable description of the pattern.\n"
+                },
+                "example": {
+                    "type": "string",
+                    "description": "An example feature name that matches the pattern.\n"
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "A JavaScript regular expression pattern, without the start and end delimiters.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "pattern"
+            ]
+        },
+        "unleash:index/ProjectLinkTemplate:ProjectLinkTemplate": {
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Link title shown in the Unleash UI.\n"
+                },
+                "urlTemplate": {
+                    "type": "string",
+                    "description": "URL template that can contain {{project}} or {{feature}} placeholders.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "urlTemplate"
+            ]
+        },
+        "unleash:index/RolePermission:RolePermission": {
+            "properties": {
+                "environment": {
+                    "type": "string",
+                    "description": "For which environment this permission applies (note that only environment-type permissions can have an environment).\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of this permission.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "unleash:index/getContextFieldLegalValue:getContextFieldLegalValue": {
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the allowed value.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The allowed value.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "description",
+                "value"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
         }
     },
     "provider": {
-        "description": "The provider type for the xyz package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "description": "The provider type for the unleash package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
         "properties": {
-            "region": {
+            "authorization": {
                 "type": "string",
-                "$ref": "#/types/xyz:region/region:Region",
-                "description": "A region which should be used."
+                "description": "Authorization token for Unleash API",
+                "secret": true
+            },
+            "baseUrl": {
+                "type": "string",
+                "description": "Unleash base URL (everything before `/api`)"
+            },
+            "maxConcurrentRequests": {
+                "type": "integer",
+                "description": "Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to \u003cspan pulumi-lang-nodejs=\"`2`\" pulumi-lang-dotnet=\"`2`\" pulumi-lang-go=\"`2`\" pulumi-lang-python=\"`2`\" pulumi-lang-yaml=\"`2`\" pulumi-lang-java=\"`2`\" pulumi-lang-hcl=\"`2`\"\u003e`2`\u003c/span\u003e, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`."
             }
         },
         "inputProperties": {
-            "region": {
+            "authorization": {
                 "type": "string",
-                "$ref": "#/types/xyz:region/region:Region",
-                "description": "A region which should be used."
+                "description": "Authorization token for Unleash API",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_AUTH_TOKEN"
+                    ]
+                },
+                "secret": true
+            },
+            "baseUrl": {
+                "type": "string",
+                "description": "Unleash base URL (everything before `/api`)",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_URL"
+                    ]
+                }
+            },
+            "maxConcurrentRequests": {
+                "type": "integer",
+                "description": "Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to \u003cspan pulumi-lang-nodejs=\"`2`\" pulumi-lang-dotnet=\"`2`\" pulumi-lang-go=\"`2`\" pulumi-lang-python=\"`2`\" pulumi-lang-yaml=\"`2`\" pulumi-lang-java=\"`2`\" pulumi-lang-hcl=\"`2`\"\u003e`2`\u003c/span\u003e, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`.",
+                "defaultInfo": {
+                    "environment": [
+                        "UNLEASH_MAX_CONCURRENT_REQUESTS"
+                    ]
+                }
             }
         },
         "methods": {
-            "terraformConfig": "pulumi:providers:xyz/terraformConfig"
+            "terraformConfig": "pulumi:providers:unleash/terraformConfig"
         }
     },
     "resources": {
-        "xyz:index/resource:Resource": {
+        "unleash:index/apiToken:ApiToken": {
+            "description": "ApiToken schema\n\n",
             "properties": {
-                "sampleAttribute": {
+                "environment": {
                     "type": "string",
-                    "description": "Sample attribute."
+                    "description": "An environment the token has access to.\n"
+                },
+                "expiresAt": {
+                    "type": "string",
+                    "description": "When the token expires\n"
+                },
+                "project": {
+                    "type": "string",
+                    "description": "A project the token belongs to.\n",
+                    "deprecationMessage": "Don't use. Use projects instead. This attribute will not work against Unleash v7"
+                },
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of projects this token has access to. If the token has access to specific projects they will be listed here. If the token has access to all projects it will be represented as `[*]`.\n"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "Secret token value.\n",
+                    "secret": true
+                },
+                "tokenName": {
+                    "type": "string",
+                    "description": "The name of the token.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the token.\n"
                 }
             },
+            "required": [
+                "environment",
+                "project",
+                "projects",
+                "secret"
+            ],
             "inputProperties": {
-                "sampleAttribute": {
+                "environment": {
                     "type": "string",
-                    "description": "Sample attribute."
+                    "description": "An environment the token has access to.\n"
+                },
+                "expiresAt": {
+                    "type": "string",
+                    "description": "When the token expires\n"
+                },
+                "project": {
+                    "type": "string",
+                    "description": "A project the token belongs to.\n",
+                    "deprecationMessage": "Don't use. Use projects instead. This attribute will not work against Unleash v7"
+                },
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of projects this token has access to. If the token has access to specific projects they will be listed here. If the token has access to all projects it will be represented as `[*]`.\n"
+                },
+                "tokenName": {
+                    "type": "string",
+                    "description": "The name of the token.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the token.\n"
                 }
             },
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering Resource resources.\n",
+                "description": "Input properties used for looking up and filtering ApiToken resources.\n",
                 "properties": {
-                    "sampleAttribute": {
+                    "environment": {
                         "type": "string",
-                        "description": "Sample attribute."
+                        "description": "An environment the token has access to.\n"
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "description": "When the token expires\n"
+                    },
+                    "project": {
+                        "type": "string",
+                        "description": "A project the token belongs to.\n",
+                        "deprecationMessage": "Don't use. Use projects instead. This attribute will not work against Unleash v7"
+                    },
+                    "projects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The list of projects this token has access to. If the token has access to specific projects they will be listed here. If the token has access to all projects it will be represented as `[*]`.\n"
+                    },
+                    "secret": {
+                        "type": "string",
+                        "description": "Secret token value.\n",
+                        "secret": true
+                    },
+                    "tokenName": {
+                        "type": "string",
+                        "description": "The name of the token.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the token.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/contextField:ContextField": {
+            "description": "Fetch a context field.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst hamContextField = new unleash.ContextField(\"ham_context_field\", {name: \"ham\"});\nconst cheeseContextField = new unleash.ContextField(\"cheese_context_field\", {\n    name: \"cheese\",\n    stickiness: true,\n    description: \"Type of cheese to constrain on\",\n    legalValues: [{\n        value: \"brie\",\n        description: \"Gooey, delicious\",\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nham_context_field = unleash.ContextField(\"ham_context_field\", name=\"ham\")\ncheese_context_field = unleash.ContextField(\"cheese_context_field\",\n    name=\"cheese\",\n    stickiness=True,\n    description=\"Type of cheese to constrain on\",\n    legal_values=[{\n        \"value\": \"brie\",\n        \"description\": \"Gooey, delicious\",\n    }])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var hamContextField = new Unleash.ContextField(\"ham_context_field\", new()\n    {\n        Name = \"ham\",\n    });\n\n    var cheeseContextField = new Unleash.ContextField(\"cheese_context_field\", new()\n    {\n        Name = \"cheese\",\n        Stickiness = true,\n        Description = \"Type of cheese to constrain on\",\n        LegalValues = new[]\n        {\n            new Unleash.Inputs.ContextFieldLegalValueArgs\n            {\n                Value = \"brie\",\n                Description = \"Gooey, delicious\",\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.NewContextField(ctx, \"ham_context_field\", \u0026unleash.ContextFieldArgs{\n\t\t\tName: pulumi.String(\"ham\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.NewContextField(ctx, \"cheese_context_field\", \u0026unleash.ContextFieldArgs{\n\t\t\tName:        pulumi.String(\"cheese\"),\n\t\t\tStickiness:  pulumi.Bool(true),\n\t\t\tDescription: pulumi.String(\"Type of cheese to constrain on\"),\n\t\t\tLegalValues: unleash.ContextFieldLegalValueArray{\n\t\t\t\t\u0026unleash.ContextFieldLegalValueArgs{\n\t\t\t\t\tValue:       pulumi.String(\"brie\"),\n\t\t\t\t\tDescription: pulumi.String(\"Gooey, delicious\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_contextfield\" \"ham_context_field\" {\n  name = \"ham\"\n}\nresource \"unleash_contextfield\" \"cheese_context_field\" {\n  name        = \"cheese\"\n  stickiness  = true\n  description = \"Type of cheese to constrain on\"\n  legal_values {\n    value       = \"brie\"\n    description = \"Gooey, delicious\"\n  }\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.ContextField;\nimport com.pulumi.unleash.ContextFieldArgs;\nimport com.pulumi.unleash.inputs.ContextFieldLegalValueArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var hamContextField = new ContextField(\"hamContextField\", ContextFieldArgs.builder()\n            .name(\"ham\")\n            .build());\n\n        var cheeseContextField = new ContextField(\"cheeseContextField\", ContextFieldArgs.builder()\n            .name(\"cheese\")\n            .stickiness(true)\n            .description(\"Type of cheese to constrain on\")\n            .legalValues(ContextFieldLegalValueArgs.builder()\n                .value(\"brie\")\n                .description(\"Gooey, delicious\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  hamContextField:\n    type: unleash:ContextField\n    name: ham_context_field\n    properties:\n      name: ham\n  cheeseContextField:\n    type: unleash:ContextField\n    name: cheese_context_field\n    properties:\n      name: cheese\n      stickiness: true\n      description: Type of cheese to constrain on\n      legalValues:\n        - value: brie\n          description: Gooey, delicious\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the context field.\n"
+                },
+                "legalValues": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ContextFieldLegalValue:ContextFieldLegalValue"
+                    },
+                    "description": "Legal values for this context field. If not set, then any value is available for this context field.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the context field.\n"
+                },
+                "stickiness": {
+                    "type": "boolean",
+                    "description": "Whether this field is available for custom stickiness. Defaults to false if not set.\n"
+                }
+            },
+            "required": [
+                "legalValues",
+                "name",
+                "stickiness"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the context field.\n"
+                },
+                "legalValues": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ContextFieldLegalValue:ContextFieldLegalValue"
+                    },
+                    "description": "Legal values for this context field. If not set, then any value is available for this context field.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the context field.\n"
+                },
+                "stickiness": {
+                    "type": "boolean",
+                    "description": "Whether this field is available for custom stickiness. Defaults to false if not set.\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ContextField resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the context field.\n"
+                    },
+                    "legalValues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/unleash:index/ContextFieldLegalValue:ContextFieldLegalValue"
+                        },
+                        "description": "Legal values for this context field. If not set, then any value is available for this context field.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the context field.\n"
+                    },
+                    "stickiness": {
+                        "type": "boolean",
+                        "description": "Whether this field is available for custom stickiness. Defaults to false if not set.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/environment:Environment": {
+            "description": "Manage Unleash environments.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst space = new unleash.Environment(\"space\", {\n    name: \"outerspace\",\n    type: \"vacuum\",\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nspace = unleash.Environment(\"space\",\n    name=\"outerspace\",\n    type=\"vacuum\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var space = new Unleash.Environment(\"space\", new()\n    {\n        Name = \"outerspace\",\n        Type = \"vacuum\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.NewEnvironment(ctx, \"space\", \u0026unleash.EnvironmentArgs{\n\t\t\tName: pulumi.String(\"outerspace\"),\n\t\t\tType: pulumi.String(\"vacuum\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_environment\" \"space\" {\n  name = \"outerspace\"\n  type = \"vacuum\"\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.Environment;\nimport com.pulumi.unleash.EnvironmentArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var space = new Environment(\"space\", EnvironmentArgs.builder()\n            .name(\"outerspace\")\n            .type(\"vacuum\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  space:\n    type: unleash:Environment\n    properties:\n      name: outerspace\n      type: vacuum\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.\n"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.\n"
+                }
+            },
+            "requiredInputs": [
+                "type"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Environment resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/group:Group": {
+            "description": "Manage an Unleash group. The\u003cspan pulumi-lang-nodejs=\" mappingsSso \" pulumi-lang-dotnet=\" MappingsSso \" pulumi-lang-go=\" mappingsSso \" pulumi-lang-python=\" mappings_sso \" pulumi-lang-yaml=\" mappingsSso \" pulumi-lang-java=\" mappingsSso \" pulumi-lang-hcl=\" mappings_sso \"\u003e mappingsSso \u003c/span\u003eattribute contains external SSO/IdP group names that should map users into this Unleash group.\n\n",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the group's purpose.\n"
+                },
+                "mappingsSsos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "External SSO/IdP group names that should map users into this Unleash group.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name for this group\n"
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The root role ID for this group.\n"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "List of user IDs to add to this group\n"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the group's purpose.\n"
+                },
+                "mappingsSsos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "External SSO/IdP group names that should map users into this Unleash group.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name for this group\n"
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The root role ID for this group.\n"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "List of user IDs to add to this group\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Group resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the group's purpose.\n"
+                    },
+                    "mappingsSsos": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "External SSO/IdP group names that should map users into this Unleash group.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name for this group\n"
+                    },
+                    "rootRole": {
+                        "type": "integer",
+                        "description": "The root role ID for this group.\n"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "description": "List of user IDs to add to this group\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/oidc:Oidc": {
+            "description": "Manages OIDC configuration.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst simpleOidcConfig = new unleash.Oidc(\"simple_oidc_config\", {\n    enabled: true,\n    discoverUrl: \"http://mock-openid-server:9000/.well-known/openid-configuration\",\n    secret: \"kinda-sorta-secret\",\n    clientId: \"client-id\",\n    autoCreate: true,\n    defaultRootRole: 1,\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nsimple_oidc_config = unleash.Oidc(\"simple_oidc_config\",\n    enabled=True,\n    discover_url=\"http://mock-openid-server:9000/.well-known/openid-configuration\",\n    secret=\"kinda-sorta-secret\",\n    client_id=\"client-id\",\n    auto_create=True,\n    default_root_role=1)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var simpleOidcConfig = new Unleash.Oidc(\"simple_oidc_config\", new()\n    {\n        Enabled = true,\n        DiscoverUrl = \"http://mock-openid-server:9000/.well-known/openid-configuration\",\n        Secret = \"kinda-sorta-secret\",\n        ClientId = \"client-id\",\n        AutoCreate = true,\n        DefaultRootRole = 1,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.NewOidc(ctx, \"simple_oidc_config\", \u0026unleash.OidcArgs{\n\t\t\tEnabled:         pulumi.Bool(true),\n\t\t\tDiscoverUrl:     pulumi.String(\"http://mock-openid-server:9000/.well-known/openid-configuration\"),\n\t\t\tSecret:          pulumi.String(\"kinda-sorta-secret\"),\n\t\t\tClientId:        pulumi.String(\"client-id\"),\n\t\t\tAutoCreate:      pulumi.Bool(true),\n\t\t\tDefaultRootRole: pulumi.Int(1),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_oidc\" \"simple_oidc_config\" {\n  enabled           = true\n  discover_url      = \"http://mock-openid-server:9000/.well-known/openid-configuration\"\n  secret            = \"kinda-sorta-secret\"\n  client_id         = \"client-id\"\n  auto_create       = true\n  default_root_role = 1\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.Oidc;\nimport com.pulumi.unleash.OidcArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var simpleOidcConfig = new Oidc(\"simpleOidcConfig\", OidcArgs.builder()\n            .enabled(true)\n            .discoverUrl(\"http://mock-openid-server:9000/.well-known/openid-configuration\")\n            .secret(\"kinda-sorta-secret\")\n            .clientId(\"client-id\")\n            .autoCreate(true)\n            .defaultRootRole(1)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  simpleOidcConfig:\n    type: unleash:Oidc\n    name: simple_oidc_config\n    properties:\n      enabled: true\n      discoverUrl: http://mock-openid-server:9000/.well-known/openid-configuration\n      secret: kinda-sorta-secret\n      clientId: client-id\n      autoCreate: true\n      defaultRootRole: 1\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "autoCreate": {
+                    "type": "boolean",
+                    "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OIDC public identifier.\n"
+                },
+                "defaultRootRole": {
+                    "type": "integer",
+                    "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                },
+                "discoverUrl": {
+                    "type": "string",
+                    "description": "A URL pointing to the .well-known configuration of the OIDC provider.\n"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not OIDC is enabled.\n"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "The OIDC secret.\n"
+                }
+            },
+            "required": [
+                "autoCreate",
+                "clientId",
+                "defaultRootRole",
+                "discoverUrl",
+                "enabled",
+                "secret"
+            ],
+            "inputProperties": {
+                "autoCreate": {
+                    "type": "boolean",
+                    "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OIDC public identifier.\n"
+                },
+                "defaultRootRole": {
+                    "type": "integer",
+                    "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                },
+                "discoverUrl": {
+                    "type": "string",
+                    "description": "A URL pointing to the .well-known configuration of the OIDC provider.\n"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not OIDC is enabled.\n"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "The OIDC secret.\n"
+                }
+            },
+            "requiredInputs": [
+                "clientId",
+                "discoverUrl",
+                "enabled",
+                "secret"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Oidc resources.\n",
+                "properties": {
+                    "autoCreate": {
+                        "type": "boolean",
+                        "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "The OIDC public identifier.\n"
+                    },
+                    "defaultRootRole": {
+                        "type": "integer",
+                        "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                    },
+                    "discoverUrl": {
+                        "type": "string",
+                        "description": "A URL pointing to the .well-known configuration of the OIDC provider.\n"
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether or not OIDC is enabled.\n"
+                    },
+                    "secret": {
+                        "type": "string",
+                        "description": "The OIDC secret.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/project:Project": {
+            "description": "Project schema\n\n",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the project's purpose.\n"
+                },
+                "featureNaming": {
+                    "$ref": "#/types/unleash:index/ProjectFeatureNaming:ProjectFeatureNaming",
+                    "description": "Optional feature naming pattern applied to all features created in this project.\n"
+                },
+                "linkTemplates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ProjectLinkTemplate:ProjectLinkTemplate"
+                    },
+                    "description": "Optional list of link templates automatically added to new feature flags.\n"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "The project's collaboration mode. Determines whether non project members can submit change requests and the projects visibility to non members. Valid values are 'open', 'protected' and 'private'. If a value is not set, the project will default to 'open'\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the project.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "Identifier for this project.\n"
+                }
+            },
+            "required": [
+                "projectId",
+                "mode",
+                "name"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "A description of the project's purpose.\n"
+                },
+                "featureNaming": {
+                    "$ref": "#/types/unleash:index/ProjectFeatureNaming:ProjectFeatureNaming",
+                    "description": "Optional feature naming pattern applied to all features created in this project.\n"
+                },
+                "linkTemplates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ProjectLinkTemplate:ProjectLinkTemplate"
+                    },
+                    "description": "Optional list of link templates automatically added to new feature flags.\n"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "The project's collaboration mode. Determines whether non project members can submit change requests and the projects visibility to non members. Valid values are 'open', 'protected' and 'private'. If a value is not set, the project will default to 'open'\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the project.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "Identifier for this project.\n"
+                }
+            },
+            "requiredInputs": [
+                "projectId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Project resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the project's purpose.\n"
+                    },
+                    "featureNaming": {
+                        "$ref": "#/types/unleash:index/ProjectFeatureNaming:ProjectFeatureNaming",
+                        "description": "Optional feature naming pattern applied to all features created in this project.\n"
+                    },
+                    "linkTemplates": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/unleash:index/ProjectLinkTemplate:ProjectLinkTemplate"
+                        },
+                        "description": "Optional list of link templates automatically added to new feature flags.\n"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "description": "The project's collaboration mode. Determines whether non project members can submit change requests and the projects visibility to non members. Valid values are 'open', 'protected' and 'private'. If a value is not set, the project will default to 'open'\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the project.\n"
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "Identifier for this project.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/projectAccess:ProjectAccess": {
+            "description": "ProjectAccess schema\n\n",
+            "properties": {
+                "project": {
+                    "type": "string",
+                    "description": "Project identifier.\n"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ProjectAccessRole:ProjectAccessRole"
+                    },
+                    "description": "Roles available in this project with their members.\n"
+                }
+            },
+            "required": [
+                "project",
+                "roles"
+            ],
+            "inputProperties": {
+                "project": {
+                    "type": "string",
+                    "description": "Project identifier.\n"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/ProjectAccessRole:ProjectAccessRole"
+                    },
+                    "description": "Roles available in this project with their members.\n"
+                }
+            },
+            "requiredInputs": [
+                "project",
+                "roles"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ProjectAccess resources.\n",
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "description": "Project identifier.\n"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/unleash:index/ProjectAccessRole:ProjectAccessRole"
+                        },
+                        "description": "Roles available in this project with their members.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/projectEnvironment:ProjectEnvironment": {
+            "description": "ProjectEnvironment schema\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst project1 = new unleash.Project(\"project_1\", {\n    projectId: \"one\",\n    name: \"First project\",\n    description: \"My first project\",\n});\nconst space = new unleash.Environment(\"space\", {\n    name: \"outerspace\",\n    type: \"vacuum\",\n});\nconst spaceEnvironment = new unleash.ProjectEnvironment(\"space_environment\", {\n    projectId: project1.projectId,\n    environmentName: space.name,\n    changeRequestsEnabled: true,\n    requiredApprovals: 2,\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nproject1 = unleash.Project(\"project_1\",\n    project_id=\"one\",\n    name=\"First project\",\n    description=\"My first project\")\nspace = unleash.Environment(\"space\",\n    name=\"outerspace\",\n    type=\"vacuum\")\nspace_environment = unleash.ProjectEnvironment(\"space_environment\",\n    project_id=project1.project_id,\n    environment_name=space.name,\n    change_requests_enabled=True,\n    required_approvals=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var project1 = new Unleash.Project(\"project_1\", new()\n    {\n        ProjectId = \"one\",\n        Name = \"First project\",\n        Description = \"My first project\",\n    });\n\n    var space = new Unleash.Environment(\"space\", new()\n    {\n        Name = \"outerspace\",\n        Type = \"vacuum\",\n    });\n\n    var spaceEnvironment = new Unleash.ProjectEnvironment(\"space_environment\", new()\n    {\n        ProjectId = project1.ProjectId,\n        EnvironmentName = space.Name,\n        ChangeRequestsEnabled = true,\n        RequiredApprovals = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tproject1, err := unleash.NewProject(ctx, \"project_1\", \u0026unleash.ProjectArgs{\n\t\t\tProjectId:   pulumi.String(\"one\"),\n\t\t\tName:        pulumi.String(\"First project\"),\n\t\t\tDescription: pulumi.String(\"My first project\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tspace, err := unleash.NewEnvironment(ctx, \"space\", \u0026unleash.EnvironmentArgs{\n\t\t\tName: pulumi.String(\"outerspace\"),\n\t\t\tType: pulumi.String(\"vacuum\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.NewProjectEnvironment(ctx, \"space_environment\", \u0026unleash.ProjectEnvironmentArgs{\n\t\t\tProjectId:             project1.ProjectId,\n\t\t\tEnvironmentName:       space.Name,\n\t\t\tChangeRequestsEnabled: pulumi.Bool(true),\n\t\t\tRequiredApprovals:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_project\" \"project_1\" {\n  project_id  = \"one\"\n  name        = \"First project\"\n  description = \"My first project\"\n}\nresource \"unleash_environment\" \"space\" {\n  name = \"outerspace\"\n  type = \"vacuum\"\n}\nresource \"unleash_projectenvironment\" \"space_environment\" {\n  project_id              = unleash_project.project_1.project_id\n  environment_name        = unleash_environment.space.name\n  change_requests_enabled = true\n  required_approvals      = 2\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.Project;\nimport com.pulumi.unleash.ProjectArgs;\nimport com.pulumi.unleash.Environment;\nimport com.pulumi.unleash.EnvironmentArgs;\nimport com.pulumi.unleash.ProjectEnvironment;\nimport com.pulumi.unleash.ProjectEnvironmentArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var project1 = new Project(\"project1\", ProjectArgs.builder()\n            .projectId(\"one\")\n            .name(\"First project\")\n            .description(\"My first project\")\n            .build());\n\n        var space = new Environment(\"space\", EnvironmentArgs.builder()\n            .name(\"outerspace\")\n            .type(\"vacuum\")\n            .build());\n\n        var spaceEnvironment = new ProjectEnvironment(\"spaceEnvironment\", ProjectEnvironmentArgs.builder()\n            .projectId(project1.projectId())\n            .environmentName(space.name())\n            .changeRequestsEnabled(true)\n            .requiredApprovals(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  project1:\n    type: unleash:Project\n    name: project_1\n    properties:\n      projectId: one\n      name: First project\n      description: My first project\n  space:\n    type: unleash:Environment\n    properties:\n      name: outerspace\n      type: vacuum\n  spaceEnvironment:\n    type: unleash:ProjectEnvironment\n    name: space_environment\n    properties:\n      projectId: ${project1.projectId}\n      environmentName: ${space.name}\n      changeRequestsEnabled: true\n      requiredApprovals: 2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "changeRequestsEnabled": {
+                    "type": "boolean",
+                    "description": "If change requests are required for this environment, the environment must be enabled for this to have effect.\n"
+                },
+                "environmentName": {
+                    "type": "string",
+                    "description": "Environment identifier, equivalent to the environment name.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "Project identifier.\n"
+                },
+                "requiredApprovals": {
+                    "type": "integer",
+                    "description": "Number of approvals required for change requests.\n"
+                }
+            },
+            "required": [
+                "changeRequestsEnabled",
+                "environmentName",
+                "projectId",
+                "requiredApprovals"
+            ],
+            "inputProperties": {
+                "changeRequestsEnabled": {
+                    "type": "boolean",
+                    "description": "If change requests are required for this environment, the environment must be enabled for this to have effect.\n"
+                },
+                "environmentName": {
+                    "type": "string",
+                    "description": "Environment identifier, equivalent to the environment name.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "Project identifier.\n"
+                },
+                "requiredApprovals": {
+                    "type": "integer",
+                    "description": "Number of approvals required for change requests.\n"
+                }
+            },
+            "requiredInputs": [
+                "environmentName",
+                "projectId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ProjectEnvironment resources.\n",
+                "properties": {
+                    "changeRequestsEnabled": {
+                        "type": "boolean",
+                        "description": "If change requests are required for this environment, the environment must be enabled for this to have effect.\n"
+                    },
+                    "environmentName": {
+                        "type": "string",
+                        "description": "Environment identifier, equivalent to the environment name.\n"
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "Project identifier.\n"
+                    },
+                    "requiredApprovals": {
+                        "type": "integer",
+                        "description": "Number of approvals required for change requests.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/role:Role": {
+            "description": "Role schema\n\n",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A more detailed description of the role and what use it's intended for.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of this role.\n"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/RolePermission:RolePermission"
+                    },
+                    "description": "A more detailed description of the role and what use it's intended for.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "A role can either be a global root role (applies to all roles) or a role role.\n"
+                }
+            },
+            "required": [
+                "description",
+                "name",
+                "permissions",
+                "type"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "A more detailed description of the role and what use it's intended for.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of this role.\n"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/unleash:index/RolePermission:RolePermission"
+                    },
+                    "description": "A more detailed description of the role and what use it's intended for.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "A role can either be a global root role (applies to all roles) or a role role.\n"
+                }
+            },
+            "requiredInputs": [
+                "description",
+                "permissions",
+                "type"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Role resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "A more detailed description of the role and what use it's intended for.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of this role.\n"
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/unleash:index/RolePermission:RolePermission"
+                        },
+                        "description": "A more detailed description of the role and what use it's intended for.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A role can either be a global root role (applies to all roles) or a role role.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/saml:Saml": {
+            "description": "Manages SAML configuration.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst simpleSamlConfig = new unleash.Saml(\"simple_saml_config\", {\n    enabled: true,\n    certificate: \"test-certificate\",\n    entityId: \"some-entity-id\",\n    signOnUrl: \"http://other-places.com\",\n    autoCreate: true,\n    defaultRootRole: 1,\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nsimple_saml_config = unleash.Saml(\"simple_saml_config\",\n    enabled=True,\n    certificate=\"test-certificate\",\n    entity_id=\"some-entity-id\",\n    sign_on_url=\"http://other-places.com\",\n    auto_create=True,\n    default_root_role=1)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var simpleSamlConfig = new Unleash.Saml(\"simple_saml_config\", new()\n    {\n        Enabled = true,\n        Certificate = \"test-certificate\",\n        EntityId = \"some-entity-id\",\n        SignOnUrl = \"http://other-places.com\",\n        AutoCreate = true,\n        DefaultRootRole = 1,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.NewSaml(ctx, \"simple_saml_config\", \u0026unleash.SamlArgs{\n\t\t\tEnabled:         pulumi.Bool(true),\n\t\t\tCertificate:     pulumi.String(\"test-certificate\"),\n\t\t\tEntityId:        pulumi.String(\"some-entity-id\"),\n\t\t\tSignOnUrl:       pulumi.String(\"http://other-places.com\"),\n\t\t\tAutoCreate:      pulumi.Bool(true),\n\t\t\tDefaultRootRole: pulumi.Int(1),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_saml\" \"simple_saml_config\" {\n  enabled           = true\n  certificate       = \"test-certificate\"\n  entity_id         = \"some-entity-id\"\n  sign_on_url       = \"http://other-places.com\"\n  auto_create       = true\n  default_root_role = 1\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.Saml;\nimport com.pulumi.unleash.SamlArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var simpleSamlConfig = new Saml(\"simpleSamlConfig\", SamlArgs.builder()\n            .enabled(true)\n            .certificate(\"test-certificate\")\n            .entityId(\"some-entity-id\")\n            .signOnUrl(\"http://other-places.com\")\n            .autoCreate(true)\n            .defaultRootRole(1)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  simpleSamlConfig:\n    type: unleash:Saml\n    name: simple_saml_config\n    properties:\n      enabled: true\n      certificate: test-certificate\n      entityId: some-entity-id\n      signOnUrl: http://other-places.com\n      autoCreate: true\n      defaultRootRole: 1\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "autoCreate": {
+                    "type": "boolean",
+                    "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                },
+                "certificate": {
+                    "type": "string",
+                    "description": "The x509 certificate used by the SAML provider.\n"
+                },
+                "defaultRootRole": {
+                    "type": "integer",
+                    "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether SAML is enabled.\n"
+                },
+                "entityId": {
+                    "type": "string",
+                    "description": "The SAML entity ID.\n"
+                },
+                "signOnUrl": {
+                    "type": "string",
+                    "description": "The SAML sign-on URL.\n"
+                }
+            },
+            "required": [
+                "autoCreate",
+                "certificate",
+                "defaultRootRole",
+                "enabled",
+                "entityId",
+                "signOnUrl"
+            ],
+            "inputProperties": {
+                "autoCreate": {
+                    "type": "boolean",
+                    "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                },
+                "certificate": {
+                    "type": "string",
+                    "description": "The x509 certificate used by the SAML provider.\n"
+                },
+                "defaultRootRole": {
+                    "type": "integer",
+                    "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether SAML is enabled.\n"
+                },
+                "entityId": {
+                    "type": "string",
+                    "description": "The SAML entity ID.\n"
+                },
+                "signOnUrl": {
+                    "type": "string",
+                    "description": "The SAML sign-on URL.\n"
+                }
+            },
+            "requiredInputs": [
+                "certificate",
+                "enabled",
+                "entityId",
+                "signOnUrl"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Saml resources.\n",
+                "properties": {
+                    "autoCreate": {
+                        "type": "boolean",
+                        "description": "Whether to auto create users when they login to Unleash for the first time.\n"
+                    },
+                    "certificate": {
+                        "type": "string",
+                        "description": "The x509 certificate used by the SAML provider.\n"
+                    },
+                    "defaultRootRole": {
+                        "type": "integer",
+                        "description": "The default root role give to a user when that user is created. Only used if\u003cspan pulumi-lang-nodejs=\" autoCreate \" pulumi-lang-dotnet=\" AutoCreate \" pulumi-lang-go=\" autoCreate \" pulumi-lang-python=\" auto_create \" pulumi-lang-yaml=\" autoCreate \" pulumi-lang-java=\" autoCreate \" pulumi-lang-hcl=\" auto_create \"\u003e autoCreate \u003c/span\u003eis set to true.\n"
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether SAML is enabled.\n"
+                    },
+                    "entityId": {
+                        "type": "string",
+                        "description": "The SAML entity ID.\n"
+                    },
+                    "signOnUrl": {
+                        "type": "string",
+                        "description": "The SAML sign-on URL.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/serviceAccount:ServiceAccount": {
+            "description": "Service accounts do nothing on their own, they need service account tokens to be created to do anything useful.\n\t\tAll tokens bound to a service account will take on the permissions of the root role assigned to the service account. It's strongly\n\t\trecommended to use the\u003cspan pulumi-lang-nodejs=\" unleash.Role \" pulumi-lang-dotnet=\" unleash.Role \" pulumi-lang-go=\" Role \" pulumi-lang-python=\" Role \" pulumi-lang-yaml=\" unleash.Role \" pulumi-lang-java=\" unleash.Role \" pulumi-lang-hcl=\" unleash_role \"\u003e unleash.Role \u003c/span\u003edata source to retrieve one of the built-in roles and use the id from that to set the service account\n\t\trole id.\n\n\t\tSee the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.\n\n",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account.\n"
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The root role ID for the service account.\n"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The username for the service account.\n"
+                }
+            },
+            "required": [
+                "name",
+                "rootRole",
+                "username"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account.\n"
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The root role ID for the service account.\n"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The username for the service account.\n"
+                }
+            },
+            "requiredInputs": [
+                "rootRole",
+                "username"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ServiceAccount resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the service account.\n"
+                    },
+                    "rootRole": {
+                        "type": "integer",
+                        "description": "The root role ID for the service account.\n"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "The username for the service account.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/serviceAccountToken:ServiceAccountToken": {
+            "description": "Allows for managing the tokens bound to a service account. Note that service account tokens in Unleash\n\t\tare both immutable and cannot be recovered once created. This means you must use them immediately when creating them via terraform.\n\t\tTypically by piping them to an external secret manager or binding them to some other external terraform resource that requires Unleash tokens.\n\n\t\tBecause service account tokens are immutable, any changes to the terraform resource will trigger a deletion and recreation of those tokens,\n\t\tmeaning that the secrets will be rotated out.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as _null from \"@pulumi/null\";\nimport * as command from \"@pulumi/command\";\nimport * as external from \"@pulumi/external\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst accountForTokensTest = new unleash.ServiceAccount(\"account_for_tokens_test\", {\n    name: \"the service account name\",\n    username: \"some descriptive name\",\n    rootRole: 1,\n});\nconst tokenForAccountTest = new unleash.ServiceAccountToken(\"token_for_account_test\", {\n    serviceAccountId: accountForTokensTest.id.apply(x =\u003eNumber(x)),\n    description: \"a token for the account\",\n    expiresAt: \"2048-01-01T00:00:00Z\",\n});\n//# This is a bare bones example to output the token to a file, this would be better off being sent to\n//# a secret manager rather\nconst storeToken = new _null.index.Resource(\"store_token\", {triggers: {\n    tokenCreated: tokenForAccountTest.secret,\n}});\nconst storeTokenProvisioner0 = new command.local.Command(\"storeTokenProvisioner0\", {create: `      #!/bin/bash\n      TOKEN_VALUE=\\\"${tokenForAccountTest.secret}\\\"\n      echo \\\"Storing token: $TOKEN_VALUE\\\"\n      echo \\\"$TOKEN_VALUE\\\" \u003e /secure/location/service_account_token.txt\n`}, {\n    dependsOn: [storeToken],\n});\n//# Some external resource that requires an Unleash token for automation\nconst externalUnleashIntegration = new external.index.Resource(\"external_unleash_integration\", {unleashApiKey: tokenForAccountTest.secret});\n```\n```python\nimport pulumi\nimport pulumi_command as command\nimport pulumi_external as external\nimport pulumi_null as null\nimport pulumi_unleash as unleash\n\naccount_for_tokens_test = unleash.ServiceAccount(\"account_for_tokens_test\",\n    name=\"the service account name\",\n    username=\"some descriptive name\",\n    root_role=1)\ntoken_for_account_test = unleash.ServiceAccountToken(\"token_for_account_test\",\n    service_account_id=account_for_tokens_test.id.apply(lambda x: int(x)),\n    description=\"a token for the account\",\n    expires_at=\"2048-01-01T00:00:00Z\")\n## This is a bare bones example to output the token to a file, this would be better off being sent to\n## a secret manager rather\nstore_token = null.Resource(\"store_token\", triggers={\n    tokenCreated: token_for_account_test.secret,\n})\nstore_token_provisioner0 = command.local.Command(\"storeTokenProvisioner0\", create=f      #!/bin/bash\n      TOKEN_VALUE=\\\"{token_for_account_test.secret}\\\"\n      echo \\\"Storing token: $TOKEN_VALUE\\\"\n      echo \\\"$TOKEN_VALUE\\\" \u003e /secure/location/service_account_token.txt\n,\nopts = pulumi.ResourceOptions(depends_on=[store_token]))\n## Some external resource that requires an Unleash token for automation\nexternal_unleash_integration = external.Resource(\"external_unleash_integration\", unleash_api_key=token_for_account_test.secret)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Command = Pulumi.Command;\nusing External = Pulumi.External;\nusing Null = Pulumi.Null;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var accountForTokensTest = new Unleash.ServiceAccount(\"account_for_tokens_test\", new()\n    {\n        Name = \"the service account name\",\n        Username = \"some descriptive name\",\n        RootRole = 1,\n    });\n\n    var tokenForAccountTest = new Unleash.ServiceAccountToken(\"token_for_account_test\", new()\n    {\n        ServiceAccountId = accountForTokensTest.Id,\n        Description = \"a token for the account\",\n        ExpiresAt = \"2048-01-01T00:00:00Z\",\n    });\n\n    //# This is a bare bones example to output the token to a file, this would be better off being sent to\n    //# a secret manager rather\n    var storeToken = new Null.Resource(\"store_token\", new()\n    {\n        Triggers = \n        {\n            { \"tokenCreated\", tokenForAccountTest.Secret },\n        },\n    });\n\n    var storeTokenProvisioner0 = new Command.Local.Command(\"storeTokenProvisioner0\", new()\n    {\n        Create = @$\"      #!/bin/bash\n      TOKEN_VALUE=\\\"\"{tokenForAccountTest.Secret}\\\"\"\n      echo \\\"\"Storing token: $TOKEN_VALUE\\\"\"\n      echo \\\"\"$TOKEN_VALUE\\\"\" \u003e /secure/location/service_account_token.txt\n\",\n    }, new CustomResourceOptions\n    {\n        DependsOn =\n        {\n            storeToken,\n        },\n    });\n\n    //# Some external resource that requires an Unleash token for automation\n    var externalUnleashIntegration = new External.Resource(\"external_unleash_integration\", new()\n    {\n        UnleashApiKey = tokenForAccountTest.Secret,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi-command/sdk/go/command/local\"\n\t\"github.com/pulumi/pulumi-external/sdk/go/external\"\n\t\"github.com/pulumi/pulumi-null/sdk/go/null\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\taccountForTokensTest, err := unleash.NewServiceAccount(ctx, \"account_for_tokens_test\", \u0026unleash.ServiceAccountArgs{\n\t\t\tName:     pulumi.String(\"the service account name\"),\n\t\t\tUsername: pulumi.String(\"some descriptive name\"),\n\t\t\tRootRole: pulumi.Int(1),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\ttokenForAccountTest, err := unleash.NewServiceAccountToken(ctx, \"token_for_account_test\", \u0026unleash.ServiceAccountTokenArgs{\n\t\t\tServiceAccountId: accountForTokensTest.ID(),\n\t\t\tDescription:      pulumi.String(\"a token for the account\"),\n\t\t\tExpiresAt:        pulumi.String(\"2048-01-01T00:00:00Z\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// # This is a bare bones example to output the token to a file, this would be better off being sent to\n\t\t// # a secret manager rather\n\t\tstoreToken, err := null.NewResource(ctx, \"store_token\", \u0026null.ResourceArgs{\n\t\t\tTriggers: map[string]interface{}{\n\t\t\t\t\"tokenCreated\": tokenForAccountTest.Secret,\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = local.NewCommand(ctx, \"storeTokenProvisioner0\", \u0026local.CommandArgs{\n\t\t\tCreate: pulumi.Sprintf(\"      #!/bin/bash\\n      TOKEN_VALUE=\\\\\\\"%v\\\\\\\"\\n      echo \\\\\\\"Storing token: $TOKEN_VALUE\\\\\\\"\\n      echo \\\\\\\"$TOKEN_VALUE\\\\\\\" \u003e /secure/location/service_account_token.txt\\n\", tokenForAccountTest.Secret),\n\t\t}, pulumi.DependsOn([]pulumi.Resource{\n\t\t\tstoreToken,\n\t\t}))\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// # Some external resource that requires an Unleash token for automation\n\t\t_, err = external.NewResource(ctx, \"external_unleash_integration\", \u0026external.ResourceArgs{\n\t\t\tUnleashApiKey: tokenForAccountTest.Secret,\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\nresource \"unleash_serviceaccount\" \"account_for_tokens_test\" {\n  name      = \"the service account name\"\n  username  = \"some descriptive name\"\n  root_role = 1\n}\nresource \"unleash_serviceaccounttoken\" \"token_for_account_test\" {\n  service_account_id = unleash_serviceaccount.account_for_tokens_test.id\n  description        = \"a token for the account\"\n  expires_at         = \"2048-01-01T00:00:00Z\"\n}\n## This is a bare bones example to output the token to a file, this would be better off being sent to\n## a secret manager rather\nresource \"null_resource\" \"store_token\" {\n  triggers = {\n    \"tokenCreated\" = unleash_serviceaccounttoken.token_for_account_test.secret\n  }\n}\nresource \"command_local_command\" \"storeTokenProvisioner0\" {\n  depends_on = [null_resource.store_token]\n  create     =\"      #!/bin/bash\n      TOKEN_VALUE=\\\"${unleash_serviceaccounttoken.token_for_account_test.secret}\\\"\n      echo \\\"Storing token: $TOKEN_VALUE\\\"\n      echo \\\"$TOKEN_VALUE\\\" \u003e /secure/location/service_account_token.txt\n\"\n}\n## Some external resource that requires an Unleash token for automation\nresource \"external_resource\" \"external_unleash_integration\" {\n  unleash_api_key = unleash_serviceaccounttoken.token_for_account_test.secret\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.ServiceAccount;\nimport com.pulumi.unleash.ServiceAccountArgs;\nimport com.pulumi.unleash.ServiceAccountToken;\nimport com.pulumi.unleash.ServiceAccountTokenArgs;\nimport com.pulumi.command.local.Command;\nimport com.pulumi.command.local.CommandArgs;\nimport com.pulumi.resources.CustomResourceOptions;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var accountForTokensTest = new ServiceAccount(\"accountForTokensTest\", ServiceAccountArgs.builder()\n            .name(\"the service account name\")\n            .username(\"some descriptive name\")\n            .rootRole(1)\n            .build());\n\n        var tokenForAccountTest = new ServiceAccountToken(\"tokenForAccountTest\", ServiceAccountTokenArgs.builder()\n            .serviceAccountId(accountForTokensTest.id())\n            .description(\"a token for the account\")\n            .expiresAt(\"2048-01-01T00:00:00Z\")\n            .build());\n\n        //# This is a bare bones example to output the token to a file, this would be better off being sent to\n        //# a secret manager rather\n        var storeToken = new com.pulumi.null.Resource(\"storeToken\", com.pulumi.null.ResourceArgs.builder()\n            .triggers(Map.of(\"tokenCreated\", tokenForAccountTest.secret()))\n            .build());\n\n        var storeTokenProvisioner0 = new Command(\"storeTokenProvisioner0\", CommandArgs.builder()\n            .create(\"\"\"\n      #!/bin/bash\n      TOKEN_VALUE=\\\"%s\\\"\n      echo \\\"Storing token: $TOKEN_VALUE\\\"\n      echo \\\"$TOKEN_VALUE\\\" \u003e /secure/location/service_account_token.txt\n\", tokenForAccountTest.secret()))\n            .build(), CustomResourceOptions.builder()\n                .dependsOn(Arrays.asList(storeToken))\n                .build());\n\n        //# Some external resource that requires an Unleash token for automation\n        var externalUnleashIntegration = new com.pulumi.external.Resource(\"externalUnleashIntegration\", com.pulumi.external.ResourceArgs.builder()\n            .unleashApiKey(tokenForAccountTest.secret())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  accountForTokensTest:\n    type: unleash:ServiceAccount\n    name: account_for_tokens_test\n    properties:\n      name: the service account name\n      username: some descriptive name\n      rootRole: 1\n  tokenForAccountTest:\n    type: unleash:ServiceAccountToken\n    name: token_for_account_test\n    properties:\n      serviceAccountId: ${accountForTokensTest.id}\n      description: a token for the account\n      expiresAt: 2048-01-01T00:00:00Z\n  ## This is a bare bones example to output the token to a file, this would be better off being sent to\n  ## a secret manager rather\n  storeToken:\n    type: null:Resource\n    name: store_token\n    properties:\n      triggers:\n        tokenCreated: ${tokenForAccountTest.secret}\n  storeTokenProvisioner0:\n    type: command:local:Command\n    properties:\n      create: |2\n              #!/bin/bash\n              TOKEN_VALUE=\\\"${tokenForAccountTest.secret}\\\"\n              echo \\\"Storing token: $TOKEN_VALUE\\\"\n              echo \\\"$TOKEN_VALUE\\\" \u003e /secure/location/service_account_token.txt\n    options:\n      dependsOn:\n        - ${storeToken}\n  ## Some external resource that requires an Unleash token for automation\n  externalUnleashIntegration:\n    type: external:Resource\n    name: external_unleash_integration\n    properties:\n      unleashApiKey: ${tokenForAccountTest.secret}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "The description of the service account token.\n"
+                },
+                "expiresAt": {
+                    "type": "string",
+                    "description": "The expiration date of the service account token.\n"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "The secret of the service account token.\n",
+                    "secret": true
+                },
+                "serviceAccountId": {
+                    "type": "integer",
+                    "description": "The ID of the service account this token is bound to.\n"
+                }
+            },
+            "required": [
+                "description",
+                "expiresAt",
+                "secret",
+                "serviceAccountId"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "The description of the service account token.\n"
+                },
+                "expiresAt": {
+                    "type": "string",
+                    "description": "The expiration date of the service account token.\n"
+                },
+                "serviceAccountId": {
+                    "type": "integer",
+                    "description": "The ID of the service account this token is bound to.\n"
+                }
+            },
+            "requiredInputs": [
+                "description",
+                "expiresAt",
+                "serviceAccountId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ServiceAccountToken resources.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the service account token.\n"
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "description": "The expiration date of the service account token.\n"
+                    },
+                    "secret": {
+                        "type": "string",
+                        "description": "The secret of the service account token.\n",
+                        "secret": true
+                    },
+                    "serviceAccountId": {
+                        "type": "integer",
+                        "description": "The ID of the service account this token is bound to.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "unleash:index/user:User": {
+            "description": "User schema\n\n",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "The email of the user.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the user.\n"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "The password of the user.\n",
+                    "secret": true
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The role id for the user.\n"
+                },
+                "sendEmail": {
+                    "type": "boolean",
+                    "description": "Send a welcome email to the customer or not. Defaults to false\n"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The username.\n"
+                }
+            },
+            "required": [
+                "name",
+                "rootRole",
+                "sendEmail"
+            ],
+            "inputProperties": {
+                "email": {
+                    "type": "string",
+                    "description": "The email of the user.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the user.\n"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "The password of the user.\n",
+                    "secret": true
+                },
+                "rootRole": {
+                    "type": "integer",
+                    "description": "The role id for the user.\n"
+                },
+                "sendEmail": {
+                    "type": "boolean",
+                    "description": "Send a welcome email to the customer or not. Defaults to false\n"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The username.\n"
+                }
+            },
+            "requiredInputs": [
+                "rootRole"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering User resources.\n",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "The email of the user.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the user.\n"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "The password of the user.\n",
+                        "secret": true
+                    },
+                    "rootRole": {
+                        "type": "integer",
+                        "description": "The role id for the user.\n"
+                    },
+                    "sendEmail": {
+                        "type": "boolean",
+                        "description": "Send a welcome email to the customer or not. Defaults to false\n"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "The username.\n"
                     }
                 },
                 "type": "object"
@@ -114,7 +1306,7 @@
         }
     },
     "functions": {
-        "pulumi:providers:xyz/terraformConfig": {
+        "pulumi:providers:unleash/terraformConfig": {
             "description": "This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.",
             "inputs": {
                 "properties": {
@@ -123,7 +1315,7 @@
                         "$ref": "#/provider"
                     }
                 },
-                "type": "pulumi:providers:xyz/terraformConfig",
+                "type": "pulumi:providers:unleash/terraformConfig",
                 "required": [
                     "__self__"
                 ]
@@ -143,33 +1335,423 @@
                 "type": "object"
             }
         },
-        "xyz:index/getDataSource:getDataSource": {
+        "unleash:index/getContextField:getContextField": {
+            "description": "Fetch a context field.\n",
             "inputs": {
-                "description": "A collection of arguments for invoking getDataSource.\n",
+                "description": "A collection of arguments for invoking getContextField.\n",
                 "properties": {
-                    "sampleAttribute": {
-                        "type": "string"
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the context field.\n"
+                    },
+                    "legalValues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/unleash:index/getContextFieldLegalValue:getContextFieldLegalValue"
+                        },
+                        "description": "Legal values for this context field. If not set, then any value is available for this context field.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the context field.\n"
+                    },
+                    "stickiness": {
+                        "type": "boolean",
+                        "description": "Whether this field is available for custom stickiness\n"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "sampleAttribute"
+                    "name"
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getDataSource.\n",
+                "description": "A collection of values returned by getContextField.\n",
                 "properties": {
-                    "id": {
-                        "description": "The provider-assigned unique ID for this managed resource.",
+                    "description": {
+                        "description": "A description of the context field.\n",
                         "type": "string"
                     },
-                    "sampleAttribute": {
+                    "legalValues": {
+                        "description": "Legal values for this context field. If not set, then any value is available for this context field.\n",
+                        "items": {
+                            "$ref": "#/types/unleash:index/getContextFieldLegalValue:getContextFieldLegalValue"
+                        },
+                        "type": "array"
+                    },
+                    "name": {
+                        "description": "The name of the context field.\n",
+                        "type": "string"
+                    },
+                    "stickiness": {
+                        "description": "Whether this field is available for custom stickiness\n",
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "description",
+                    "legalValues",
+                    "name",
+                    "stickiness"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getEnvironment:getEnvironment": {
+            "description": "Access existing environments.\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getEnvironment.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the environment. Must be a URL-friendly string according to RFC 3968.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "type"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getEnvironment.\n",
+                "properties": {
+                    "name": {
+                        "description": "The name of the environment. Must be a URL-friendly string according to RFC 3968.\n",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.\n",
                         "type": "string"
                     }
                 },
                 "required": [
-                    "sampleAttribute",
+                    "name",
+                    "type"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getGroup:getGroup": {
+            "description": "Fetch a group by id or name. The\u003cspan pulumi-lang-nodejs=\" mappingsSso \" pulumi-lang-dotnet=\" MappingsSso \" pulumi-lang-go=\" mappingsSso \" pulumi-lang-python=\" mappings_sso \" pulumi-lang-yaml=\" mappingsSso \" pulumi-lang-java=\" mappingsSso \" pulumi-lang-hcl=\" mappings_sso \"\u003e mappingsSso \u003c/span\u003eattribute contains external SSO/IdP group names mapped to this Unleash group.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst team = unleash.getGroup({\n    name: \"Example Team\",\n});\nconst teamById = team.then(team =\u003e unleash.getGroup({\n    id: team.id,\n}));\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nteam = unleash.get_group(name=\"Example Team\")\nteam_by_id = unleash.get_group(id=team.id)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var team = Unleash.GetGroup.Invoke(new()\n    {\n        Name = \"Example Team\",\n    });\n\n    var teamById = Unleash.GetGroup.Invoke(new()\n    {\n        Id = team.Apply(getGroupResult =\u003e getGroupResult.Id),\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tteam, err := unleash.GetGroup(ctx, \u0026unleash.LookupGroupArgsArgs{\n\t\t\tName: pulumi.StringRef(\"Example Team\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetGroup(ctx, \u0026unleash.LookupGroupArgsArgs{\n\t\t\tId: pulumi.StringRef(team.Id),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\ndata \"unleash_getgroup\" \"team\" {\n  name = \"Example Team\"\n}\ndata \"unleash_getgroup\" \"teamById\" {\n  id = data.unleash_getgroup.team.id\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.UnleashFunctions;\nimport com.pulumi.unleash.inputs.GetGroupArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var team = UnleashFunctions.getGroup(GetGroupArgs.builder()\n            .name(\"Example Team\")\n            .build());\n\n        final var teamById = UnleashFunctions.getGroup(GetGroupArgs.builder()\n            .id(team.id())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  team:\n    fn::invoke:\n      function: unleash:getGroup\n      arguments:\n        name: Example Team\n  teamById:\n    fn::invoke:\n      function: unleash:getGroup\n      arguments:\n        id: ${team.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getGroup.\n",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Group ID to look up. If name is also provided, it must match the returned group name.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Group name to look up. If id is also provided, the group returned by that id must have this name.\n"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getGroup.\n",
+                "properties": {
+                    "description": {
+                        "description": "A description of the group's purpose.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Group ID to look up. If name is also provided, it must match the returned group name.\n",
+                        "type": "string"
+                    },
+                    "mappingsSsos": {
+                        "description": "External SSO/IdP group names mapped to this Unleash group.\n",
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "name": {
+                        "description": "Group name to look up. If id is also provided, the group returned by that id must have this name.\n",
+                        "type": "string"
+                    },
+                    "rootRole": {
+                        "description": "The root role ID for this group.\n",
+                        "type": "integer"
+                    },
+                    "users": {
+                        "description": "List of user IDs in this group.\n",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "description",
+                    "id",
+                    "mappingsSsos",
+                    "name",
+                    "rootRole",
+                    "users"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getPermission:getPermission": {
+            "description": "Fetch a permission.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst createProject = unleash.getPermission({\n    name: \"CREATE_PROJECT\",\n});\nconst updateProject = unleash.getPermission({\n    name: \"UPDATE_PROJECT\",\n});\nconst createFeatureStrategy = unleash.getPermission({\n    name: \"CREATE_FEATURE_STRATEGY\",\n    environment: \"development\",\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\ncreate_project = unleash.get_permission(name=\"CREATE_PROJECT\")\nupdate_project = unleash.get_permission(name=\"UPDATE_PROJECT\")\ncreate_feature_strategy = unleash.get_permission(name=\"CREATE_FEATURE_STRATEGY\",\n    environment=\"development\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var createProject = Unleash.GetPermission.Invoke(new()\n    {\n        Name = \"CREATE_PROJECT\",\n    });\n\n    var updateProject = Unleash.GetPermission.Invoke(new()\n    {\n        Name = \"UPDATE_PROJECT\",\n    });\n\n    var createFeatureStrategy = Unleash.GetPermission.Invoke(new()\n    {\n        Name = \"CREATE_FEATURE_STRATEGY\",\n        Environment = \"development\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.GetPermission(ctx, \u0026unleash.GetPermissionArgsArgs{\n\t\t\tName: \"CREATE_PROJECT\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetPermission(ctx, \u0026unleash.GetPermissionArgsArgs{\n\t\t\tName: \"UPDATE_PROJECT\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetPermission(ctx, \u0026unleash.GetPermissionArgsArgs{\n\t\t\tName:        \"CREATE_FEATURE_STRATEGY\",\n\t\t\tEnvironment: pulumi.StringRef(\"development\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\ndata \"unleash_getpermission\" \"createProject\" {\n  name = \"CREATE_PROJECT\"\n}\ndata \"unleash_getpermission\" \"updateProject\" {\n  name = \"UPDATE_PROJECT\"\n}\ndata \"unleash_getpermission\" \"createFeatureStrategy\" {\n  name        = \"CREATE_FEATURE_STRATEGY\"\n  environment = \"development\"\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.UnleashFunctions;\nimport com.pulumi.unleash.inputs.GetPermissionArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var createProject = UnleashFunctions.getPermission(GetPermissionArgs.builder()\n            .name(\"CREATE_PROJECT\")\n            .build());\n\n        final var updateProject = UnleashFunctions.getPermission(GetPermissionArgs.builder()\n            .name(\"UPDATE_PROJECT\")\n            .build());\n\n        final var createFeatureStrategy = UnleashFunctions.getPermission(GetPermissionArgs.builder()\n            .name(\"CREATE_FEATURE_STRATEGY\")\n            .environment(\"development\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  createProject:\n    fn::invoke:\n      function: unleash:getPermission\n      arguments:\n        name: CREATE_PROJECT\n  updateProject:\n    fn::invoke:\n      function: unleash:getPermission\n      arguments:\n        name: UPDATE_PROJECT\n  createFeatureStrategy:\n    fn::invoke:\n      function: unleash:getPermission\n      arguments:\n        name: CREATE_FEATURE_STRATEGY\n        environment: development\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getPermission.\n",
+                "properties": {
+                    "environment": {
+                        "type": "string",
+                        "description": "Which environment this permission applies to.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the permission.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getPermission.\n",
+                "properties": {
+                    "displayName": {
+                        "description": "The name to display in listings of permissions.\n",
+                        "type": "string"
+                    },
+                    "environment": {
+                        "description": "Which environment this permission applies to.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Identifier for this permission.\n",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The name of the permission.\n",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "What level this permission applies to. Either root, project or the name of the environment it applies to.\n",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "displayName",
+                    "id",
+                    "name",
+                    "type"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getProject:getProject": {
+            "description": "Fetch a project definition.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst test = unleash.getProject({\n    id: \"default\",\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\ntest = unleash.get_project(id=\"default\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var test = Unleash.GetProject.Invoke(new()\n    {\n        Id = \"default\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.GetProject(ctx, \u0026unleash.LookupProjectArgsArgs{\n\t\t\tId: \"default\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\ndata \"unleash_getproject\" \"test\" {\n  id = \"default\"\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.UnleashFunctions;\nimport com.pulumi.unleash.inputs.GetProjectArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var test = UnleashFunctions.getProject(GetProjectArgs.builder()\n            .id(\"default\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  test:\n    fn::invoke:\n      function: unleash:getProject\n      arguments:\n        id: default\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getProject.\n",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the project's purpose.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The id of this project.\n"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "description": "The project's collaboration mode. Determines whether non project members can submit change requests and the projects visibility to non members. Valid values are 'open', 'protected' and 'private'. If a value is not set, the project will default to 'open'\n"
+                    }
+                },
+                "type": "object",
+                "required": [
                     "id"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getProject.\n",
+                "properties": {
+                    "description": {
+                        "description": "A description of the project's purpose.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "The id of this project.\n",
+                        "type": "string"
+                    },
+                    "mode": {
+                        "description": "The project's collaboration mode. Determines whether non project members can submit change requests and the projects visibility to non members. Valid values are 'open', 'protected' and 'private'. If a value is not set, the project will default to 'open'\n",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of this project.\n",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "mode",
+                    "name"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getProjectEnvironment:getProjectEnvironment": {
+            "description": "ProjectEnvironment schema\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getProjectEnvironment.\n",
+                "properties": {
+                    "environmentName": {
+                        "type": "string",
+                        "description": "Environment identifier, equivalent to the environment name.\n"
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "Project identifier.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "environmentName",
+                    "projectId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getProjectEnvironment.\n",
+                "properties": {
+                    "changeRequestsEnabled": {
+                        "description": "If change requests are required for this environment, the environment must be enabled for this to have effect.\n",
+                        "type": "boolean"
+                    },
+                    "enabled": {
+                        "description": "If the environment is enabled for this project. This affects whether or not users will be able to enable flags for this environment on this project.\n",
+                        "type": "boolean"
+                    },
+                    "environmentName": {
+                        "description": "Environment identifier, equivalent to the environment name.\n",
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "description": "Project identifier.\n",
+                        "type": "string"
+                    },
+                    "requiredApprovals": {
+                        "description": "Number of approvals required for change requests.\n",
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "changeRequestsEnabled",
+                    "enabled",
+                    "environmentName",
+                    "projectId",
+                    "requiredApprovals"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getRole:getRole": {
+            "description": "Fetch a role definition.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst adminRole = unleash.getRole({\n    name: \"Admin\",\n});\nconst editorRole = unleash.getRole({\n    name: \"Editor\",\n});\nconst projectMemberRole = unleash.getRole({\n    name: \"Member\",\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nadmin_role = unleash.get_role(name=\"Admin\")\neditor_role = unleash.get_role(name=\"Editor\")\nproject_member_role = unleash.get_role(name=\"Member\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var adminRole = Unleash.GetRole.Invoke(new()\n    {\n        Name = \"Admin\",\n    });\n\n    var editorRole = Unleash.GetRole.Invoke(new()\n    {\n        Name = \"Editor\",\n    });\n\n    var projectMemberRole = Unleash.GetRole.Invoke(new()\n    {\n        Name = \"Member\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.GetRole(ctx, \u0026unleash.LookupRoleArgsArgs{\n\t\t\tName: \"Admin\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetRole(ctx, \u0026unleash.LookupRoleArgsArgs{\n\t\t\tName: \"Editor\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetRole(ctx, \u0026unleash.LookupRoleArgsArgs{\n\t\t\tName: \"Member\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\ndata \"unleash_getrole\" \"adminRole\" {\n  name = \"Admin\"\n}\ndata \"unleash_getrole\" \"editorRole\" {\n  name = \"Editor\"\n}\ndata \"unleash_getrole\" \"projectMemberRole\" {\n  name = \"Member\"\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.UnleashFunctions;\nimport com.pulumi.unleash.inputs.GetRoleArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var adminRole = UnleashFunctions.getRole(GetRoleArgs.builder()\n            .name(\"Admin\")\n            .build());\n\n        final var editorRole = UnleashFunctions.getRole(GetRoleArgs.builder()\n            .name(\"Editor\")\n            .build());\n\n        final var projectMemberRole = UnleashFunctions.getRole(GetRoleArgs.builder()\n            .name(\"Member\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  adminRole:\n    fn::invoke:\n      function: unleash:getRole\n      arguments:\n        name: Admin\n  editorRole:\n    fn::invoke:\n      function: unleash:getRole\n      arguments:\n        name: Editor\n  projectMemberRole:\n    fn::invoke:\n      function: unleash:getRole\n      arguments:\n        name: Member\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getRole.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of this role.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRole.\n",
+                "properties": {
+                    "description": {
+                        "description": "A more detailed description of the role and what use it's intended for.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "The id of this role.\n",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The name of this role.\n",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "A role can either be a global root role (applies to all roles) or a role role.\n",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "description",
+                    "id",
+                    "name",
+                    "type"
+                ],
+                "type": "object"
+            }
+        },
+        "unleash:index/getUser:getUser": {
+            "description": "Fetch a user by id or email.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as unleash from \"@pulumi/unleash\";\n\nconst admin = unleash.getUser({\n    id: \"1\",\n});\nconst searchByEmail = unleash.getUser({\n    email: \"byemail@example.com\",\n});\n```\n```python\nimport pulumi\nimport pulumi_unleash as unleash\n\nadmin = unleash.get_user(id=\"1\")\nsearch_by_email = unleash.get_user(email=\"byemail@example.com\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Unleash = Pulumi.Unleash;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var admin = Unleash.GetUser.Invoke(new()\n    {\n        Id = \"1\",\n    });\n\n    var searchByEmail = Unleash.GetUser.Invoke(new()\n    {\n        Email = \"byemail@example.com\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := unleash.GetUser(ctx, \u0026unleash.LookupUserArgsArgs{\n\t\t\tId: pulumi.StringRef(\"1\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = unleash.GetUser(ctx, \u0026unleash.LookupUserArgsArgs{\n\t\t\tEmail: pulumi.StringRef(\"byemail@example.com\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```hcl\npulumi {\n  required_providers {\n    unleash = {\n      source = \"pulumi/unleash\"\n    }\n  }\n}\n\ndata \"unleash_getuser\" \"admin\" {\n  id = \"1\"\n}\ndata \"unleash_getuser\" \"searchByEmail\" {\n  email = \"byemail@example.com\"\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.unleash.UnleashFunctions;\nimport com.pulumi.unleash.inputs.GetUserArgs;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var admin = UnleashFunctions.getUser(GetUserArgs.builder()\n            .id(\"1\")\n            .build());\n\n        final var searchByEmail = UnleashFunctions.getUser(GetUserArgs.builder()\n            .email(\"byemail@example.com\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  admin:\n    fn::invoke:\n      function: unleash:getUser\n      arguments:\n        id: '1'\n  searchByEmail:\n    fn::invoke:\n      function: unleash:getUser\n      arguments:\n        email: byemail@example.com\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getUser.\n",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "The email of the user.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Identifier for this user.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the user.\n"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "The username of the user.\n"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getUser.\n",
+                "properties": {
+                    "email": {
+                        "description": "The email of the user.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Identifier for this user.\n",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the user.\n",
+                        "type": "string"
+                    },
+                    "rootRole": {
+                        "description": "The role id for the user.\n",
+                        "type": "integer"
+                    },
+                    "username": {
+                        "description": "The username of the user.\n",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "id",
+                    "name",
+                    "rootRole",
+                    "username"
                 ],
                 "type": "object"
             }
