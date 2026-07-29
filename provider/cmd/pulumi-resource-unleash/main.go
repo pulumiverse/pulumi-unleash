@@ -15,18 +15,19 @@
 package main
 
 import (
+	"context"
+
 	_ "embed"
 
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
-
 	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
-	"github.com/hagaym1/pulumi-unleash/provider/v3/pkg/version"
+
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 )
 
 //go:embed schema.json
 var pulumiSchema []byte
 
 func main() {
-	// Modify the path to point to the new provider
-	tfbridge.Main("unleash", version.Version, unleash.Provider(), pulumiSchema)
+	tfbridge.Main(context.Background(), "unleash", unleash.Provider(),
+		tfbridge.ProviderMetadata{PackageSchema: pulumiSchema})
 }

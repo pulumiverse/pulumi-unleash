@@ -15,13 +15,11 @@
 package main
 
 import (
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen"
-
 	unleash "github.com/hagaym1/pulumi-unleash/provider/v3"
-	"github.com/hagaym1/pulumi-unleash/provider/v3/pkg/version"
+
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen"
 )
 
 func main() {
-	// Modify the path to point to the new provider
-	tfgen.Main("unleash", version.Version, unleash.Provider())
+	tfgen.Main("unleash", unleash.Provider())
 }
