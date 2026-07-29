@@ -2,20 +2,17 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "./types/input";
-import * as outputs from "./types/output";
-import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
 /**
- * The provider type for the xyz package. By default, resources use package-wide configuration
+ * The provider type for the unleash package. By default, resources use package-wide configuration
  * settings, however an explicit `Provider` instance may be created and passed during resource
  * construction to achieve fine-grained programmatic control over provider settings. See the
  * [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
  */
 export class Provider extends pulumi.ProviderResource {
     /** @internal */
-    public static readonly __pulumiType = 'xyz';
+    public static readonly __pulumiType = 'unleash';
 
     /**
      * Returns true if the given object is an instance of Provider.  This is designed to work even
@@ -29,9 +26,13 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
-     * A region which should be used.
+     * Authorization token for Unleash API
      */
-    declare public readonly region: pulumi.Output<enums.region.Region | undefined>;
+    declare public readonly authorization: pulumi.Output<string | undefined>;
+    /**
+     * Unleash base URL (everything before `/api`)
+     */
+    declare public readonly baseUrl: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -44,9 +45,13 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            resourceInputs["region"] = args?.region;
+            resourceInputs["authorization"] = (args?.authorization ? pulumi.secret(args.authorization) : undefined) ?? utilities.getEnv("UNLEASH_AUTH_TOKEN");
+            resourceInputs["baseUrl"] = (args?.baseUrl) ?? utilities.getEnv("UNLEASH_URL");
+            resourceInputs["maxConcurrentRequests"] = pulumi.output((args?.maxConcurrentRequests) ?? utilities.getEnvNumber("UNLEASH_MAX_CONCURRENT_REQUESTS")).apply(JSON.stringify);
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["authorization"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
 
@@ -54,7 +59,7 @@ export class Provider extends pulumi.ProviderResource {
      * This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.
      */
     terraformConfig(): pulumi.Output<Provider.TerraformConfigResult> {
-        return pulumi.runtime.call("pulumi:providers:xyz/terraformConfig", {
+        return pulumi.runtime.call("pulumi:providers:unleash/terraformConfig", {
             "__self__": this,
         }, this);
     }
@@ -65,9 +70,17 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     /**
-     * A region which should be used.
+     * Authorization token for Unleash API
      */
-    region?: pulumi.Input<enums.region.Region | undefined>;
+    authorization?: pulumi.Input<string | undefined>;
+    /**
+     * Unleash base URL (everything before `/api`)
+     */
+    baseUrl?: pulumi.Input<string | undefined>;
+    /**
+     * Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to `2`, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`.
+     */
+    maxConcurrentRequests?: pulumi.Input<number | undefined>;
 }
 
 export namespace Provider {

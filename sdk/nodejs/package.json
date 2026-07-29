@@ -1,13 +1,13 @@
 {
-    "name": "@pulumi/xyz",
-    "version": "1.0.0-alpha.0+dev",
-    "description": "A Pulumi package for creating and managing xyz cloud resources.",
+    "name": "@pulumi/unleash",
+    "version": "3.0.0-alpha.0+dev",
+    "description": "A Pulumi package for creating and managing unleash cloud resources.",
     "keywords": [
-        "xyz",
+        "unleash",
         "category/cloud"
     ],
     "homepage": "https://www.pulumi.com",
-    "repository": "https://github.com/pulumi/pulumi-xyz",
+    "repository": "https://github.com/pulumiverse/pulumi-unleash",
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
@@ -21,7 +21,7 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "xyz",
-        "version": "1.0.0-alpha.0+dev"
+        "name": "unleash",
+        "version": "3.0.0-alpha.0+dev"
     }
 }

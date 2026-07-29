@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/sdk
+module github.com/hagaym1/pulumi-unleash/sdk/v3
 
 go 1.25.8
 

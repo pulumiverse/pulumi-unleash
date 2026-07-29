@@ -7,22 +7,28 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Xyz
+namespace Pulumi.Unleash
 {
     /// <summary>
-    /// The provider type for the xyz package. By default, resources use package-wide configuration
+    /// The provider type for the unleash package. By default, resources use package-wide configuration
     /// settings, however an explicit `Provider` instance may be created and passed during resource
     /// construction to achieve fine-grained programmatic control over provider settings. See the
     /// [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
     /// </summary>
-    [XyzResourceType("pulumi:providers:xyz")]
+    [UnleashResourceType("pulumi:providers:unleash")]
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
-        /// A region which should be used.
+        /// Authorization token for Unleash API
         /// </summary>
-        [Output("region")]
-        public Output<string?> Region { get; private set; } = null!;
+        [Output("authorization")]
+        public Output<string?> Authorization { get; private set; } = null!;
+
+        /// <summary>
+        /// Unleash base URL (everything before `/api`)
+        /// </summary>
+        [Output("baseUrl")]
+        public Output<string?> BaseUrl { get; private set; } = null!;
 
 
         /// <summary>
@@ -33,7 +39,7 @@ namespace Pulumi.Xyz
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
-            : base("xyz", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
+            : base("unleash", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
 
@@ -42,6 +48,10 @@ namespace Pulumi.Xyz
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                AdditionalSecretOutputs =
+                {
+                    "authorization",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -53,19 +63,44 @@ namespace Pulumi.Xyz
         /// This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.
         /// </summary>
         public global::Pulumi.Output<ProviderTerraformConfigResult> TerraformConfig()
-            => global::Pulumi.Deployment.Instance.Call<ProviderTerraformConfigResult>("pulumi:providers:xyz/terraformConfig", CallArgs.Empty, this);
+            => global::Pulumi.Deployment.Instance.Call<ProviderTerraformConfigResult>("pulumi:providers:unleash/terraformConfig", CallArgs.Empty, this);
     }
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
+        [Input("authorization")]
+        private Input<string>? _authorization;
+
         /// <summary>
-        /// A region which should be used.
+        /// Authorization token for Unleash API
         /// </summary>
-        [Input("region", json: true)]
-        public Input<Pulumi.Xyz.Region.Region>? Region { get; set; }
+        public Input<string>? Authorization
+        {
+            get => _authorization;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _authorization = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        /// <summary>
+        /// Unleash base URL (everything before `/api`)
+        /// </summary>
+        [Input("baseUrl")]
+        public Input<string>? BaseUrl { get; set; }
+
+        /// <summary>
+        /// Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to `2`, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`.
+        /// </summary>
+        [Input("maxConcurrentRequests", json: true)]
+        public Input<int>? MaxConcurrentRequests { get; set; }
 
         public ProviderArgs()
         {
+            Authorization = Utilities.GetEnv("UNLEASH_AUTH_TOKEN");
+            BaseUrl = Utilities.GetEnv("UNLEASH_URL");
+            MaxConcurrentRequests = Utilities.GetEnvInt32("UNLEASH_MAX_CONCURRENT_REQUESTS");
         }
         public static new ProviderArgs Empty => new ProviderArgs();
     }

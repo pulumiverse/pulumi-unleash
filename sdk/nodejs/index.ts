@@ -5,28 +5,121 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { GetDataSourceArgs, GetDataSourceResult, GetDataSourceOutputArgs } from "./getDataSource";
-export const getDataSource: typeof import("./getDataSource").getDataSource = null as any;
-export const getDataSourceOutput: typeof import("./getDataSource").getDataSourceOutput = null as any;
-utilities.lazyLoad(exports, ["getDataSource","getDataSourceOutput"], () => require("./getDataSource"));
+export { ApiTokenArgs, ApiTokenState } from "./apiToken";
+export type ApiToken = import("./apiToken").ApiToken;
+export const ApiToken: typeof import("./apiToken").ApiToken = null as any;
+utilities.lazyLoad(exports, ["ApiToken"], () => require("./apiToken"));
+
+export { ContextFieldArgs, ContextFieldState } from "./contextField";
+export type ContextField = import("./contextField").ContextField;
+export const ContextField: typeof import("./contextField").ContextField = null as any;
+utilities.lazyLoad(exports, ["ContextField"], () => require("./contextField"));
+
+export { EnvironmentArgs, EnvironmentState } from "./environment";
+export type Environment = import("./environment").Environment;
+export const Environment: typeof import("./environment").Environment = null as any;
+utilities.lazyLoad(exports, ["Environment"], () => require("./environment"));
+
+export { GetContextFieldArgs, GetContextFieldResult, GetContextFieldOutputArgs } from "./getContextField";
+export const getContextField: typeof import("./getContextField").getContextField = null as any;
+export const getContextFieldOutput: typeof import("./getContextField").getContextFieldOutput = null as any;
+utilities.lazyLoad(exports, ["getContextField","getContextFieldOutput"], () => require("./getContextField"));
+
+export { GetEnvironmentArgs, GetEnvironmentResult, GetEnvironmentOutputArgs } from "./getEnvironment";
+export const getEnvironment: typeof import("./getEnvironment").getEnvironment = null as any;
+export const getEnvironmentOutput: typeof import("./getEnvironment").getEnvironmentOutput = null as any;
+utilities.lazyLoad(exports, ["getEnvironment","getEnvironmentOutput"], () => require("./getEnvironment"));
+
+export { GetGroupArgs, GetGroupResult, GetGroupOutputArgs } from "./getGroup";
+export const getGroup: typeof import("./getGroup").getGroup = null as any;
+export const getGroupOutput: typeof import("./getGroup").getGroupOutput = null as any;
+utilities.lazyLoad(exports, ["getGroup","getGroupOutput"], () => require("./getGroup"));
+
+export { GetPermissionArgs, GetPermissionResult, GetPermissionOutputArgs } from "./getPermission";
+export const getPermission: typeof import("./getPermission").getPermission = null as any;
+export const getPermissionOutput: typeof import("./getPermission").getPermissionOutput = null as any;
+utilities.lazyLoad(exports, ["getPermission","getPermissionOutput"], () => require("./getPermission"));
+
+export { GetProjectArgs, GetProjectResult, GetProjectOutputArgs } from "./getProject";
+export const getProject: typeof import("./getProject").getProject = null as any;
+export const getProjectOutput: typeof import("./getProject").getProjectOutput = null as any;
+utilities.lazyLoad(exports, ["getProject","getProjectOutput"], () => require("./getProject"));
+
+export { GetProjectEnvironmentArgs, GetProjectEnvironmentResult, GetProjectEnvironmentOutputArgs } from "./getProjectEnvironment";
+export const getProjectEnvironment: typeof import("./getProjectEnvironment").getProjectEnvironment = null as any;
+export const getProjectEnvironmentOutput: typeof import("./getProjectEnvironment").getProjectEnvironmentOutput = null as any;
+utilities.lazyLoad(exports, ["getProjectEnvironment","getProjectEnvironmentOutput"], () => require("./getProjectEnvironment"));
+
+export { GetRoleArgs, GetRoleResult, GetRoleOutputArgs } from "./getRole";
+export const getRole: typeof import("./getRole").getRole = null as any;
+export const getRoleOutput: typeof import("./getRole").getRoleOutput = null as any;
+utilities.lazyLoad(exports, ["getRole","getRoleOutput"], () => require("./getRole"));
+
+export { GetUserArgs, GetUserResult, GetUserOutputArgs } from "./getUser";
+export const getUser: typeof import("./getUser").getUser = null as any;
+export const getUserOutput: typeof import("./getUser").getUserOutput = null as any;
+utilities.lazyLoad(exports, ["getUser","getUserOutput"], () => require("./getUser"));
+
+export { GroupArgs, GroupState } from "./group";
+export type Group = import("./group").Group;
+export const Group: typeof import("./group").Group = null as any;
+utilities.lazyLoad(exports, ["Group"], () => require("./group"));
+
+export { OidcArgs, OidcState } from "./oidc";
+export type Oidc = import("./oidc").Oidc;
+export const Oidc: typeof import("./oidc").Oidc = null as any;
+utilities.lazyLoad(exports, ["Oidc"], () => require("./oidc"));
+
+export { ProjectArgs, ProjectState } from "./project";
+export type Project = import("./project").Project;
+export const Project: typeof import("./project").Project = null as any;
+utilities.lazyLoad(exports, ["Project"], () => require("./project"));
+
+export { ProjectAccessArgs, ProjectAccessState } from "./projectAccess";
+export type ProjectAccess = import("./projectAccess").ProjectAccess;
+export const ProjectAccess: typeof import("./projectAccess").ProjectAccess = null as any;
+utilities.lazyLoad(exports, ["ProjectAccess"], () => require("./projectAccess"));
+
+export { ProjectEnvironmentArgs, ProjectEnvironmentState } from "./projectEnvironment";
+export type ProjectEnvironment = import("./projectEnvironment").ProjectEnvironment;
+export const ProjectEnvironment: typeof import("./projectEnvironment").ProjectEnvironment = null as any;
+utilities.lazyLoad(exports, ["ProjectEnvironment"], () => require("./projectEnvironment"));
 
 export * from "./provider";
 import { Provider } from "./provider";
 
-export { ResourceArgs, ResourceState } from "./resource";
-export type Resource = import("./resource").Resource;
-export const Resource: typeof import("./resource").Resource = null as any;
-utilities.lazyLoad(exports, ["Resource"], () => require("./resource"));
+export { RoleArgs, RoleState } from "./role";
+export type Role = import("./role").Role;
+export const Role: typeof import("./role").Role = null as any;
+utilities.lazyLoad(exports, ["Role"], () => require("./role"));
+
+export { SamlArgs, SamlState } from "./saml";
+export type Saml = import("./saml").Saml;
+export const Saml: typeof import("./saml").Saml = null as any;
+utilities.lazyLoad(exports, ["Saml"], () => require("./saml"));
+
+export { ServiceAccountArgs, ServiceAccountState } from "./serviceAccount";
+export type ServiceAccount = import("./serviceAccount").ServiceAccount;
+export const ServiceAccount: typeof import("./serviceAccount").ServiceAccount = null as any;
+utilities.lazyLoad(exports, ["ServiceAccount"], () => require("./serviceAccount"));
+
+export { ServiceAccountTokenArgs, ServiceAccountTokenState } from "./serviceAccountToken";
+export type ServiceAccountToken = import("./serviceAccountToken").ServiceAccountToken;
+export const ServiceAccountToken: typeof import("./serviceAccountToken").ServiceAccountToken = null as any;
+utilities.lazyLoad(exports, ["ServiceAccountToken"], () => require("./serviceAccountToken"));
+
+export { UserArgs, UserState } from "./user";
+export type User = import("./user").User;
+export const User: typeof import("./user").User = null as any;
+utilities.lazyLoad(exports, ["User"], () => require("./user"));
 
 
 // Export sub-modules:
 import * as config from "./config";
-import * as region from "./region";
 import * as types from "./types";
 
 export {
     config,
-    region,
     types,
 };
 
@@ -34,18 +127,54 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "xyz:index/resource:Resource":
-                return new Resource(name, <any>undefined, { urn })
+            case "unleash:index/apiToken:ApiToken":
+                return new ApiToken(name, <any>undefined, { urn })
+            case "unleash:index/contextField:ContextField":
+                return new ContextField(name, <any>undefined, { urn })
+            case "unleash:index/environment:Environment":
+                return new Environment(name, <any>undefined, { urn })
+            case "unleash:index/group:Group":
+                return new Group(name, <any>undefined, { urn })
+            case "unleash:index/oidc:Oidc":
+                return new Oidc(name, <any>undefined, { urn })
+            case "unleash:index/project:Project":
+                return new Project(name, <any>undefined, { urn })
+            case "unleash:index/projectAccess:ProjectAccess":
+                return new ProjectAccess(name, <any>undefined, { urn })
+            case "unleash:index/projectEnvironment:ProjectEnvironment":
+                return new ProjectEnvironment(name, <any>undefined, { urn })
+            case "unleash:index/role:Role":
+                return new Role(name, <any>undefined, { urn })
+            case "unleash:index/saml:Saml":
+                return new Saml(name, <any>undefined, { urn })
+            case "unleash:index/serviceAccount:ServiceAccount":
+                return new ServiceAccount(name, <any>undefined, { urn })
+            case "unleash:index/serviceAccountToken:ServiceAccountToken":
+                return new ServiceAccountToken(name, <any>undefined, { urn })
+            case "unleash:index/user:User":
+                return new User(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("xyz", "index/resource", _module)
-pulumi.runtime.registerResourcePackage("xyz", {
+pulumi.runtime.registerResourceModule("unleash", "index/apiToken", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/contextField", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/environment", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/group", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/oidc", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/project", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/projectAccess", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/projectEnvironment", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/role", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/saml", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/serviceAccount", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/serviceAccountToken", _module)
+pulumi.runtime.registerResourceModule("unleash", "index/user", _module)
+pulumi.runtime.registerResourcePackage("unleash", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {
-        if (type !== "pulumi:providers:xyz") {
+        if (type !== "pulumi:providers:unleash") {
             throw new Error(`unknown provider type ${type}`);
         }
         return new Provider(name, <any>undefined, { urn });

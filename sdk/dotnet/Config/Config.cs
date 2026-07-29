@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.Xyz
+namespace Pulumi.Unleash
 {
     public static class Config
     {
@@ -30,16 +30,36 @@ namespace Pulumi.Xyz
             }
         }
 
-        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("xyz");
+        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("unleash");
 
-        private static readonly __Value<Pulumi.Xyz.Region.Region?> _region = new __Value<Pulumi.Xyz.Region.Region?>(() => __config.GetObject<Pulumi.Xyz.Region.Region>("region"));
+        private static readonly __Value<string?> _authorization = new __Value<string?>(() => __config.Get("authorization") ?? Utilities.GetEnv("UNLEASH_AUTH_TOKEN"));
         /// <summary>
-        /// A region which should be used.
+        /// Authorization token for Unleash API
         /// </summary>
-        public static Pulumi.Xyz.Region.Region? Region
+        public static string? Authorization
         {
-            get => _region.Get();
-            set => _region.Set(value);
+            get => _authorization.Get();
+            set => _authorization.Set(value);
+        }
+
+        private static readonly __Value<string?> _baseUrl = new __Value<string?>(() => __config.Get("baseUrl") ?? Utilities.GetEnv("UNLEASH_URL"));
+        /// <summary>
+        /// Unleash base URL (everything before `/api`)
+        /// </summary>
+        public static string? BaseUrl
+        {
+            get => _baseUrl.Get();
+            set => _baseUrl.Set(value);
+        }
+
+        private static readonly __Value<int?> _maxConcurrentRequests = new __Value<int?>(() => __config.GetInt32("maxConcurrentRequests") ?? Utilities.GetEnvInt32("UNLEASH_MAX_CONCURRENT_REQUESTS"));
+        /// <summary>
+        /// Maximum number of concurrent HTTP requests the provider sends to the Unleash API. Defaults to `2`, which is the recommended value for most Unleash deployments. Increasing this value can overload Unleash instances with small database connection pools and should only be done when the backend capacity is known to support it. Can also be set with `UNLEASH_MAX_CONCURRENT_REQUESTS`.
+        /// </summary>
+        public static int? MaxConcurrentRequests
+        {
+            get => _maxConcurrentRequests.Get();
+            set => _maxConcurrentRequests.Set(value);
         }
 
     }
