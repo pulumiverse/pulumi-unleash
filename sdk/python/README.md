@@ -58,6 +58,13 @@ licence. The upstream provider's own acceptance tests set `UNLEASH_LICENSE` for 
 | `ApiToken` | Real create/destroy against OSS Unleash in CI |
 | Everything else | Compile and schema generation only |
 
+The `ApiToken` test (`examples/oss-ts`, driven by `TestOssTs` in
+`examples/examples_nodejs_test.go`) starts its own Unleash + Postgres containers via
+[testcontainers-go](https://github.com/testcontainers/testcontainers-go), so it runs identically locally
+and in CI with no setup step. The root [`docker-compose.yml`](./docker-compose.yml) is still there
+as a convenience for running the example by hand (`docker compose up` + `pulumi up`) — it is
+optional and the test does not depend on it.
+
 Contributions widening this are welcome, but note that a licence secret is not available to pull
 requests from forks, so fork CI cannot exercise Enterprise resources either.
 

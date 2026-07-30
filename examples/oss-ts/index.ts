@@ -1,8 +1,11 @@
 import * as unleash from "@pulumi/unleash";
 
+const baseUrl = process.env.UNLEASH_URL ?? "http://localhost:4242";
+const authorization = process.env.UNLEASH_AUTH_TOKEN ?? "*:*.unleash-insecure-admin-api-token";
+
 const provider = new unleash.Provider("test", {
-    baseUrl: "http://localhost:4242",
-    authorization: "*:*.unleash-insecure-admin-api-token",
+    baseUrl,
+    authorization,
 });
 
 const apiToken = new unleash.ApiToken("test", {
