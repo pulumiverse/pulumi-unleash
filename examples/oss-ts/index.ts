@@ -1,4 +1,4 @@
-import * as unleash from "@pulumi/unleash";
+import * as unleash from "@pulumiverse/unleash";
 
 const baseUrl = process.env.UNLEASH_URL ?? "http://localhost:4242";
 const authorization = process.env.UNLEASH_AUTH_TOKEN ?? "*:*.unleash-insecure-admin-api-token";
