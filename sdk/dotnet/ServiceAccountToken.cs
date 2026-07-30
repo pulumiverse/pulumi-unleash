@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Unleash
+namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Allows for managing the tokens bound to a service account. Note that service account tokens in Unleash
@@ -26,7 +27,7 @@ namespace Pulumi.Unleash
     /// using Command = Pulumi.Command;
     /// using External = Pulumi.External;
     /// using Null = Pulumi.Null;
-    /// using Unleash = Pulumi.Unleash;
+    /// using Unleash = Pulumiverse.Unleash;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {

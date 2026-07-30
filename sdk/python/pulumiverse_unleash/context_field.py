@@ -182,7 +182,7 @@ class ContextField(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         ham_context_field = unleash.ContextField("ham_context_field", name="ham")
         cheese_context_field = unleash.ContextField("cheese_context_field",
@@ -216,7 +216,7 @@ class ContextField(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         ham_context_field = unleash.ContextField("ham_context_field", name="ham")
         cheese_context_field = unleash.ContextField("cheese_context_field",

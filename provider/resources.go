@@ -90,10 +90,14 @@ func Provider() tfbridge.ProviderInfo {
 			},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
+			// Publish under the Pulumiverse npm scope, not the official @pulumi namespace.
+			PackageName: "@pulumiverse/unleash",
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 		},
 		Python: &tfbridge.PythonInfo{
+			// Publish under the Pulumiverse PyPI namespace, not the official pulumi_ prefix.
+			PackageName: "pulumiverse_unleash",
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 			// Enable modern PyProject support in the generated Python SDK.
@@ -129,6 +133,8 @@ func Provider() tfbridge.ProviderInfo {
 			},
 		},
 		CSharp: &tfbridge.CSharpInfo{
+			// Publish under the Pulumiverse NuGet namespace, not the official Pulumi.* namespace.
+			RootNamespace: "Pulumiverse",
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 			// Use a wildcard import so NuGet will prefer the latest possible version.

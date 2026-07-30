@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Unleash
+namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Manages OIDC configuration.
@@ -18,7 +19,7 @@ namespace Pulumi.Unleash
     /// using System.Collections.Generic;
     /// using System.Linq;
     /// using Pulumi;
-    /// using Unleash = Pulumi.Unleash;
+    /// using Unleash = Pulumiverse.Unleash;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {

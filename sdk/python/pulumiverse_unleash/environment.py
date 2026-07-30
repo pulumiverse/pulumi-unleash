@@ -113,7 +113,7 @@ class Environment(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         space = unleash.Environment("space",
             name="outerspace",
@@ -139,7 +139,7 @@ class Environment(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         space = unleash.Environment("space",
             name="outerspace",

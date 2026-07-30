@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.Unleash
+namespace Pulumiverse.Unleash
 {
     public static class Config
     {

@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as unleash from "@pulumi/unleash";
+ * import * as unleash from "@pulumiverse/unleash";
  *
  * const adminRole = unleash.getRole({
  *     name: "Admin",
@@ -69,7 +69,7 @@ export interface GetRoleResult {
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as unleash from "@pulumi/unleash";
+ * import * as unleash from "@pulumiverse/unleash";
  *
  * const adminRole = unleash.getRole({
  *     name: "Admin",

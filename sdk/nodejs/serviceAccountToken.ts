@@ -19,7 +19,7 @@ import * as utilities from "./utilities";
  * import * as _null from "@pulumi/null";
  * import * as command from "@pulumi/command";
  * import * as external from "@pulumi/external";
- * import * as unleash from "@pulumi/unleash";
+ * import * as unleash from "@pulumiverse/unleash";
  *
  * const accountForTokensTest = new unleash.ServiceAccount("account_for_tokens_test", {
  *     name: "the service account name",

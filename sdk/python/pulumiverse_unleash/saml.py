@@ -14,65 +14,53 @@ else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
-__all__ = ['OidcArgs', 'Oidc']
+__all__ = ['SamlArgs', 'Saml']
 
 @pulumi.input_type
-class OidcArgs:
+class SamlArgs:
     def __init__(__self__, *,
-                 client_id: pulumi.Input[_builtins.str],
-                 discover_url: pulumi.Input[_builtins.str],
+                 certificate: pulumi.Input[_builtins.str],
                  enabled: pulumi.Input[_builtins.bool],
-                 secret: pulumi.Input[_builtins.str],
+                 entity_id: pulumi.Input[_builtins.str],
+                 sign_on_url: pulumi.Input[_builtins.str],
                  auto_create: pulumi.Input[Optional[_builtins.bool]] = None,
                  default_root_role: pulumi.Input[Optional[_builtins.int]] = None):
         """
-        The set of arguments for constructing a Oidc resource.
+        The set of arguments for constructing a Saml resource.
 
-        :param pulumi.Input[_builtins.str] client_id: The OIDC public identifier.
-        :param pulumi.Input[_builtins.str] discover_url: A URL pointing to the .well-known configuration of the OIDC provider.
-        :param pulumi.Input[_builtins.bool] enabled: Whether or not OIDC is enabled.
-        :param pulumi.Input[_builtins.str] secret: The OIDC secret.
+        :param pulumi.Input[_builtins.str] certificate: The x509 certificate used by the SAML provider.
+        :param pulumi.Input[_builtins.bool] enabled: Whether SAML is enabled.
+        :param pulumi.Input[_builtins.str] entity_id: The SAML entity ID.
+        :param pulumi.Input[_builtins.str] sign_on_url: The SAML sign-on URL.
         :param pulumi.Input[_builtins.bool] auto_create: Whether to auto create users when they login to Unleash for the first time.
         :param pulumi.Input[_builtins.int] default_root_role: The default root role give to a user when that user is created. Only used if auto_create is set to true.
         """
-        pulumi.set(__self__, "client_id", client_id)
-        pulumi.set(__self__, "discover_url", discover_url)
+        pulumi.set(__self__, "certificate", certificate)
         pulumi.set(__self__, "enabled", enabled)
-        pulumi.set(__self__, "secret", secret)
+        pulumi.set(__self__, "entity_id", entity_id)
+        pulumi.set(__self__, "sign_on_url", sign_on_url)
         if auto_create is not None:
             pulumi.set(__self__, "auto_create", auto_create)
         if default_root_role is not None:
             pulumi.set(__self__, "default_root_role", default_root_role)
 
     @_builtins.property
-    @pulumi.getter(name="clientId")
-    def client_id(self) -> pulumi.Input[_builtins.str]:
+    @pulumi.getter
+    def certificate(self) -> pulumi.Input[_builtins.str]:
         """
-        The OIDC public identifier.
+        The x509 certificate used by the SAML provider.
         """
-        return pulumi.get(self, "client_id")
+        return pulumi.get(self, "certificate")
 
-    @client_id.setter
-    def client_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "client_id", value)
-
-    @_builtins.property
-    @pulumi.getter(name="discoverUrl")
-    def discover_url(self) -> pulumi.Input[_builtins.str]:
-        """
-        A URL pointing to the .well-known configuration of the OIDC provider.
-        """
-        return pulumi.get(self, "discover_url")
-
-    @discover_url.setter
-    def discover_url(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "discover_url", value)
+    @certificate.setter
+    def certificate(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "certificate", value)
 
     @_builtins.property
     @pulumi.getter
     def enabled(self) -> pulumi.Input[_builtins.bool]:
         """
-        Whether or not OIDC is enabled.
+        Whether SAML is enabled.
         """
         return pulumi.get(self, "enabled")
 
@@ -81,16 +69,28 @@ class OidcArgs:
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
-    @pulumi.getter
-    def secret(self) -> pulumi.Input[_builtins.str]:
+    @pulumi.getter(name="entityId")
+    def entity_id(self) -> pulumi.Input[_builtins.str]:
         """
-        The OIDC secret.
+        The SAML entity ID.
         """
-        return pulumi.get(self, "secret")
+        return pulumi.get(self, "entity_id")
 
-    @secret.setter
-    def secret(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "secret", value)
+    @entity_id.setter
+    def entity_id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "entity_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="signOnUrl")
+    def sign_on_url(self) -> pulumi.Input[_builtins.str]:
+        """
+        The SAML sign-on URL.
+        """
+        return pulumi.get(self, "sign_on_url")
+
+    @sign_on_url.setter
+    def sign_on_url(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "sign_on_url", value)
 
     @_builtins.property
     @pulumi.getter(name="autoCreate")
@@ -118,36 +118,36 @@ class OidcArgs:
 
 
 @pulumi.input_type
-class _OidcState:
+class _SamlState:
     def __init__(__self__, *,
                  auto_create: pulumi.Input[Optional[_builtins.bool]] = None,
-                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 certificate: pulumi.Input[Optional[_builtins.str]] = None,
                  default_root_role: pulumi.Input[Optional[_builtins.int]] = None,
-                 discover_url: pulumi.Input[Optional[_builtins.str]] = None,
                  enabled: pulumi.Input[Optional[_builtins.bool]] = None,
-                 secret: pulumi.Input[Optional[_builtins.str]] = None):
+                 entity_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sign_on_url: pulumi.Input[Optional[_builtins.str]] = None):
         """
-        Input properties used for looking up and filtering Oidc resources.
+        Input properties used for looking up and filtering Saml resources.
 
         :param pulumi.Input[_builtins.bool] auto_create: Whether to auto create users when they login to Unleash for the first time.
-        :param pulumi.Input[_builtins.str] client_id: The OIDC public identifier.
+        :param pulumi.Input[_builtins.str] certificate: The x509 certificate used by the SAML provider.
         :param pulumi.Input[_builtins.int] default_root_role: The default root role give to a user when that user is created. Only used if auto_create is set to true.
-        :param pulumi.Input[_builtins.str] discover_url: A URL pointing to the .well-known configuration of the OIDC provider.
-        :param pulumi.Input[_builtins.bool] enabled: Whether or not OIDC is enabled.
-        :param pulumi.Input[_builtins.str] secret: The OIDC secret.
+        :param pulumi.Input[_builtins.bool] enabled: Whether SAML is enabled.
+        :param pulumi.Input[_builtins.str] entity_id: The SAML entity ID.
+        :param pulumi.Input[_builtins.str] sign_on_url: The SAML sign-on URL.
         """
         if auto_create is not None:
             pulumi.set(__self__, "auto_create", auto_create)
-        if client_id is not None:
-            pulumi.set(__self__, "client_id", client_id)
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
         if default_root_role is not None:
             pulumi.set(__self__, "default_root_role", default_root_role)
-        if discover_url is not None:
-            pulumi.set(__self__, "discover_url", discover_url)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
-        if secret is not None:
-            pulumi.set(__self__, "secret", secret)
+        if entity_id is not None:
+            pulumi.set(__self__, "entity_id", entity_id)
+        if sign_on_url is not None:
+            pulumi.set(__self__, "sign_on_url", sign_on_url)
 
     @_builtins.property
     @pulumi.getter(name="autoCreate")
@@ -162,16 +162,16 @@ class _OidcState:
         pulumi.set(self, "auto_create", value)
 
     @_builtins.property
-    @pulumi.getter(name="clientId")
-    def client_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+    @pulumi.getter
+    def certificate(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The OIDC public identifier.
+        The x509 certificate used by the SAML provider.
         """
-        return pulumi.get(self, "client_id")
+        return pulumi.get(self, "certificate")
 
-    @client_id.setter
-    def client_id(self, value: pulumi.Input[Optional[_builtins.str]]):
-        pulumi.set(self, "client_id", value)
+    @certificate.setter
+    def certificate(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultRootRole")
@@ -186,22 +186,10 @@ class _OidcState:
         pulumi.set(self, "default_root_role", value)
 
     @_builtins.property
-    @pulumi.getter(name="discoverUrl")
-    def discover_url(self) -> pulumi.Input[Optional[_builtins.str]]:
-        """
-        A URL pointing to the .well-known configuration of the OIDC provider.
-        """
-        return pulumi.get(self, "discover_url")
-
-    @discover_url.setter
-    def discover_url(self, value: pulumi.Input[Optional[_builtins.str]]):
-        pulumi.set(self, "discover_url", value)
-
-    @_builtins.property
     @pulumi.getter
     def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Whether or not OIDC is enabled.
+        Whether SAML is enabled.
         """
         return pulumi.get(self, "enabled")
 
@@ -210,45 +198,57 @@ class _OidcState:
         pulumi.set(self, "enabled", value)
 
     @_builtins.property
-    @pulumi.getter
-    def secret(self) -> pulumi.Input[Optional[_builtins.str]]:
+    @pulumi.getter(name="entityId")
+    def entity_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The OIDC secret.
+        The SAML entity ID.
         """
-        return pulumi.get(self, "secret")
+        return pulumi.get(self, "entity_id")
 
-    @secret.setter
-    def secret(self, value: pulumi.Input[Optional[_builtins.str]]):
-        pulumi.set(self, "secret", value)
+    @entity_id.setter
+    def entity_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "entity_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="signOnUrl")
+    def sign_on_url(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The SAML sign-on URL.
+        """
+        return pulumi.get(self, "sign_on_url")
+
+    @sign_on_url.setter
+    def sign_on_url(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "sign_on_url", value)
 
 
-@pulumi.type_token("unleash:index/oidc:Oidc")
-class Oidc(pulumi.CustomResource):
+@pulumi.type_token("unleash:index/saml:Saml")
+class Saml(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auto_create: pulumi.Input[Optional[_builtins.bool]] = None,
-                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 certificate: pulumi.Input[Optional[_builtins.str]] = None,
                  default_root_role: pulumi.Input[Optional[_builtins.int]] = None,
-                 discover_url: pulumi.Input[Optional[_builtins.str]] = None,
                  enabled: pulumi.Input[Optional[_builtins.bool]] = None,
-                 secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 entity_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sign_on_url: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
-        Manages OIDC configuration.
+        Manages SAML configuration.
 
         ## Example Usage
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
-        simple_oidc_config = unleash.Oidc("simple_oidc_config",
+        simple_saml_config = unleash.Saml("simple_saml_config",
             enabled=True,
-            discover_url="http://mock-openid-server:9000/.well-known/openid-configuration",
-            secret="kinda-sorta-secret",
-            client_id="client-id",
+            certificate="test-certificate",
+            entity_id="some-entity-id",
+            sign_on_url="http://other-places.com",
             auto_create=True,
             default_root_role=1)
         ```
@@ -257,44 +257,44 @@ class Oidc(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] auto_create: Whether to auto create users when they login to Unleash for the first time.
-        :param pulumi.Input[_builtins.str] client_id: The OIDC public identifier.
+        :param pulumi.Input[_builtins.str] certificate: The x509 certificate used by the SAML provider.
         :param pulumi.Input[_builtins.int] default_root_role: The default root role give to a user when that user is created. Only used if auto_create is set to true.
-        :param pulumi.Input[_builtins.str] discover_url: A URL pointing to the .well-known configuration of the OIDC provider.
-        :param pulumi.Input[_builtins.bool] enabled: Whether or not OIDC is enabled.
-        :param pulumi.Input[_builtins.str] secret: The OIDC secret.
+        :param pulumi.Input[_builtins.bool] enabled: Whether SAML is enabled.
+        :param pulumi.Input[_builtins.str] entity_id: The SAML entity ID.
+        :param pulumi.Input[_builtins.str] sign_on_url: The SAML sign-on URL.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: OidcArgs,
+                 args: SamlArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Manages OIDC configuration.
+        Manages SAML configuration.
 
         ## Example Usage
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
-        simple_oidc_config = unleash.Oidc("simple_oidc_config",
+        simple_saml_config = unleash.Saml("simple_saml_config",
             enabled=True,
-            discover_url="http://mock-openid-server:9000/.well-known/openid-configuration",
-            secret="kinda-sorta-secret",
-            client_id="client-id",
+            certificate="test-certificate",
+            entity_id="some-entity-id",
+            sign_on_url="http://other-places.com",
             auto_create=True,
             default_root_role=1)
         ```
 
 
         :param str resource_name: The name of the resource.
-        :param OidcArgs args: The arguments to use to populate this resource's properties.
+        :param SamlArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(OidcArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(SamlArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -304,11 +304,11 @@ class Oidc(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auto_create: pulumi.Input[Optional[_builtins.bool]] = None,
-                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 certificate: pulumi.Input[Optional[_builtins.str]] = None,
                  default_root_role: pulumi.Input[Optional[_builtins.int]] = None,
-                 discover_url: pulumi.Input[Optional[_builtins.str]] = None,
                  enabled: pulumi.Input[Optional[_builtins.bool]] = None,
-                 secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 entity_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sign_on_url: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -316,24 +316,24 @@ class Oidc(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = OidcArgs.__new__(OidcArgs)
+            __props__ = SamlArgs.__new__(SamlArgs)
 
             __props__.__dict__["auto_create"] = auto_create
-            if client_id is None and not opts.urn:
-                raise TypeError("Missing required property 'client_id'")
-            __props__.__dict__["client_id"] = client_id
+            if certificate is None and not opts.urn:
+                raise TypeError("Missing required property 'certificate'")
+            __props__.__dict__["certificate"] = certificate
             __props__.__dict__["default_root_role"] = default_root_role
-            if discover_url is None and not opts.urn:
-                raise TypeError("Missing required property 'discover_url'")
-            __props__.__dict__["discover_url"] = discover_url
             if enabled is None and not opts.urn:
                 raise TypeError("Missing required property 'enabled'")
             __props__.__dict__["enabled"] = enabled
-            if secret is None and not opts.urn:
-                raise TypeError("Missing required property 'secret'")
-            __props__.__dict__["secret"] = secret
-        super(Oidc, __self__).__init__(
-            'unleash:index/oidc:Oidc',
+            if entity_id is None and not opts.urn:
+                raise TypeError("Missing required property 'entity_id'")
+            __props__.__dict__["entity_id"] = entity_id
+            if sign_on_url is None and not opts.urn:
+                raise TypeError("Missing required property 'sign_on_url'")
+            __props__.__dict__["sign_on_url"] = sign_on_url
+        super(Saml, __self__).__init__(
+            'unleash:index/saml:Saml',
             resource_name,
             __props__,
             opts)
@@ -343,36 +343,36 @@ class Oidc(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             auto_create: pulumi.Input[Optional[_builtins.bool]] = None,
-            client_id: pulumi.Input[Optional[_builtins.str]] = None,
+            certificate: pulumi.Input[Optional[_builtins.str]] = None,
             default_root_role: pulumi.Input[Optional[_builtins.int]] = None,
-            discover_url: pulumi.Input[Optional[_builtins.str]] = None,
             enabled: pulumi.Input[Optional[_builtins.bool]] = None,
-            secret: pulumi.Input[Optional[_builtins.str]] = None) -> 'Oidc':
+            entity_id: pulumi.Input[Optional[_builtins.str]] = None,
+            sign_on_url: pulumi.Input[Optional[_builtins.str]] = None) -> 'Saml':
         """
-        Get an existing Oidc resource's state with the given name, id, and optional extra
+        Get an existing Saml resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] auto_create: Whether to auto create users when they login to Unleash for the first time.
-        :param pulumi.Input[_builtins.str] client_id: The OIDC public identifier.
+        :param pulumi.Input[_builtins.str] certificate: The x509 certificate used by the SAML provider.
         :param pulumi.Input[_builtins.int] default_root_role: The default root role give to a user when that user is created. Only used if auto_create is set to true.
-        :param pulumi.Input[_builtins.str] discover_url: A URL pointing to the .well-known configuration of the OIDC provider.
-        :param pulumi.Input[_builtins.bool] enabled: Whether or not OIDC is enabled.
-        :param pulumi.Input[_builtins.str] secret: The OIDC secret.
+        :param pulumi.Input[_builtins.bool] enabled: Whether SAML is enabled.
+        :param pulumi.Input[_builtins.str] entity_id: The SAML entity ID.
+        :param pulumi.Input[_builtins.str] sign_on_url: The SAML sign-on URL.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = _OidcState.__new__(_OidcState)
+        __props__ = _SamlState.__new__(_SamlState)
 
         __props__.__dict__["auto_create"] = auto_create
-        __props__.__dict__["client_id"] = client_id
+        __props__.__dict__["certificate"] = certificate
         __props__.__dict__["default_root_role"] = default_root_role
-        __props__.__dict__["discover_url"] = discover_url
         __props__.__dict__["enabled"] = enabled
-        __props__.__dict__["secret"] = secret
-        return Oidc(resource_name, opts=opts, __props__=__props__)
+        __props__.__dict__["entity_id"] = entity_id
+        __props__.__dict__["sign_on_url"] = sign_on_url
+        return Saml(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
     @pulumi.getter(name="autoCreate")
@@ -383,12 +383,12 @@ class Oidc(pulumi.CustomResource):
         return pulumi.get(self, "auto_create")
 
     @_builtins.property
-    @pulumi.getter(name="clientId")
-    def client_id(self) -> pulumi.Output[_builtins.str]:
+    @pulumi.getter
+    def certificate(self) -> pulumi.Output[_builtins.str]:
         """
-        The OIDC public identifier.
+        The x509 certificate used by the SAML provider.
         """
-        return pulumi.get(self, "client_id")
+        return pulumi.get(self, "certificate")
 
     @_builtins.property
     @pulumi.getter(name="defaultRootRole")
@@ -399,26 +399,26 @@ class Oidc(pulumi.CustomResource):
         return pulumi.get(self, "default_root_role")
 
     @_builtins.property
-    @pulumi.getter(name="discoverUrl")
-    def discover_url(self) -> pulumi.Output[_builtins.str]:
-        """
-        A URL pointing to the .well-known configuration of the OIDC provider.
-        """
-        return pulumi.get(self, "discover_url")
-
-    @_builtins.property
     @pulumi.getter
     def enabled(self) -> pulumi.Output[_builtins.bool]:
         """
-        Whether or not OIDC is enabled.
+        Whether SAML is enabled.
         """
         return pulumi.get(self, "enabled")
 
     @_builtins.property
-    @pulumi.getter
-    def secret(self) -> pulumi.Output[_builtins.str]:
+    @pulumi.getter(name="entityId")
+    def entity_id(self) -> pulumi.Output[_builtins.str]:
         """
-        The OIDC secret.
+        The SAML entity ID.
         """
-        return pulumi.get(self, "secret")
+        return pulumi.get(self, "entity_id")
+
+    @_builtins.property
+    @pulumi.getter(name="signOnUrl")
+    def sign_on_url(self) -> pulumi.Output[_builtins.str]:
+        """
+        The SAML sign-on URL.
+        """
+        return pulumi.get(self, "sign_on_url")
 

@@ -33,10 +33,10 @@ from . import outputs
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
-    import pulumi_unleash.config as __config
+    import pulumiverse_unleash.config as __config
     config = __config
 else:
-    config = _utilities.lazy_import('pulumi_unleash.config')
+    config = _utilities.lazy_import('pulumiverse_unleash.config')
 
 _utilities.register(
     resource_modules="""
@@ -44,7 +44,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/apiToken",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/apiToken:ApiToken": "ApiToken"
   }
@@ -52,7 +52,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/contextField",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/contextField:ContextField": "ContextField"
   }
@@ -60,7 +60,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/environment",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/environment:Environment": "Environment"
   }
@@ -68,7 +68,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/group",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/group:Group": "Group"
   }
@@ -76,7 +76,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/oidc",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/oidc:Oidc": "Oidc"
   }
@@ -84,7 +84,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/project",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/project:Project": "Project"
   }
@@ -92,7 +92,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/projectAccess",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/projectAccess:ProjectAccess": "ProjectAccess"
   }
@@ -100,7 +100,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/projectEnvironment",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/projectEnvironment:ProjectEnvironment": "ProjectEnvironment"
   }
@@ -108,7 +108,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/role",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/role:Role": "Role"
   }
@@ -116,7 +116,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/saml",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/saml:Saml": "Saml"
   }
@@ -124,7 +124,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/serviceAccount",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/serviceAccount:ServiceAccount": "ServiceAccount"
   }
@@ -132,7 +132,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/serviceAccountToken",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/serviceAccountToken:ServiceAccountToken": "ServiceAccountToken"
   }
@@ -140,7 +140,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "mod": "index/user",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "classes": {
    "unleash:index/user:User": "User"
   }
@@ -152,7 +152,7 @@ _utilities.register(
  {
   "pkg": "unleash",
   "token": "pulumi:providers:unleash",
-  "fqn": "pulumi_unleash",
+  "fqn": "pulumiverse_unleash",
   "class": "Provider"
  }
 ]

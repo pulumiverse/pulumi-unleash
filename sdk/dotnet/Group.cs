@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Unleash
+namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Manage an Unleash group. The MappingsSso attribute contains external SSO/IdP group names that should map users into this Unleash group.

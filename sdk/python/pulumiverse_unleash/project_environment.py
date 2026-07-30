@@ -178,7 +178,7 @@ class ProjectEnvironment(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         project1 = unleash.Project("project_1",
             project_id="one",
@@ -215,7 +215,7 @@ class ProjectEnvironment(pulumi.CustomResource):
 
         ```python
         import pulumi
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         project1 = unleash.Project("project_1",
             project_id="one",

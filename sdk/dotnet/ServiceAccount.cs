@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Unleash
+namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Service accounts do nothing on their own, they need service account tokens to be created to do anything useful.

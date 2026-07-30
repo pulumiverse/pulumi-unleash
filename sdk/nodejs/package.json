@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi/unleash",
+    "name": "@pulumiverse/unleash",
     "version": "3.0.0-alpha.0+dev",
     "description": "A Pulumi package for creating and managing unleash cloud resources.",
     "keywords": [

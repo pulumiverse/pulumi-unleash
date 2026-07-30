@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Unleash.Inputs
+namespace Pulumiverse.Unleash.Inputs
 {
 
     public sealed class GetContextFieldLegalValueInputArgs : global::Pulumi.ResourceArgs

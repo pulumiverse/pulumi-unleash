@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as unleash from "@pulumi/unleash";
+ * import * as unleash from "@pulumiverse/unleash";
  *
  * const project1 = new unleash.Project("project_1", {
  *     projectId: "one",

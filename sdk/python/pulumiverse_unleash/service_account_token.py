@@ -168,7 +168,7 @@ class ServiceAccountToken(pulumi.CustomResource):
         import pulumi_command as command
         import pulumi_external as external
         import pulumi_null as null
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         account_for_tokens_test = unleash.ServiceAccount("account_for_tokens_test",
             name="the service account name",
@@ -221,7 +221,7 @@ class ServiceAccountToken(pulumi.CustomResource):
         import pulumi_command as command
         import pulumi_external as external
         import pulumi_null as null
-        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
 
         account_for_tokens_test = unleash.ServiceAccount("account_for_tokens_test",
             name="the service account name",
