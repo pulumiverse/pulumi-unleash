@@ -1,2 +1,2 @@
-// A Pulumi package for creating and managing unleash cloud resources.
+// A Pulumi package for creating and managing Unleash resources.
 package unleash

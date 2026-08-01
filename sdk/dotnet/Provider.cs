@@ -49,6 +49,7 @@ namespace Pulumiverse.Unleash
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/pulumiverse",
                 AdditionalSecretOutputs =
                 {
                     "authorization",

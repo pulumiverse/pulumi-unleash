@@ -1,7 +1,7 @@
 {
     "name": "@pulumiverse/unleash",
     "version": "3.0.0-alpha.0+dev",
-    "description": "A Pulumi package for creating and managing unleash cloud resources.",
+    "description": "A Pulumi package for creating and managing Unleash resources.",
     "keywords": [
         "unleash",
         "category/cloud"
@@ -22,6 +22,7 @@
     "pulumi": {
         "resource": true,
         "name": "unleash",
-        "version": "3.0.0-alpha.0+dev"
+        "version": "3.0.0-alpha.0+dev",
+        "server": "github://api.github.com/pulumiverse"
     }
 }

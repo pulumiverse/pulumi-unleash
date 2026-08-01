@@ -1,7 +1,7 @@
 {
     "name": "unleash",
     "displayName": "Unleash",
-    "description": "A Pulumi package for creating and managing unleash cloud resources.",
+    "description": "A Pulumi package for creating and managing Unleash resources.",
     "keywords": [
         "unleash",
         "category/cloud"
@@ -10,6 +10,7 @@
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`unleash` Terraform Provider](https://github.com/Unleash/terraform-provider-unleash).",
     "repository": "https://github.com/pulumiverse/pulumi-unleash",
+    "pluginDownloadURL": "github://api.github.com/pulumiverse",
     "publisher": "Pulumiverse",
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"
@@ -31,7 +32,7 @@
         },
         "nodejs": {
             "packageName": "@pulumiverse/unleash",
-            "packageDescription": "A Pulumi package for creating and managing unleash cloud resources.",
+            "packageDescription": "A Pulumi package for creating and managing Unleash resources.",
             "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/Unleash/terraform-provider-unleash)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-unleash` repo](https://github.com/pulumiverse/pulumi-unleash/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-unleash` repo](https://github.com/Unleash/terraform-provider-unleash/issues).",
             "compatibility": "tfbridge20",
             "disableUnionOutputTypes": true,

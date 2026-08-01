@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Pulumiverse</Authors>
     <Company>Pulumiverse</Company>
-    <Description>A Pulumi package for creating and managing unleash cloud resources.</Description>
+    <Description>A Pulumi package for creating and managing Unleash resources.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://www.pulumi.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pulumiverse/pulumi-unleash</RepositoryUrl>
