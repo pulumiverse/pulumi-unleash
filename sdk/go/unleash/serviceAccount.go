@@ -8,8 +8,8 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash/internal"
 )
 
 // Service accounts do nothing on their own, they need service account tokens to be created to do anything useful.

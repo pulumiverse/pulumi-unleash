@@ -1,4 +1,4 @@
-module github.com/hagaym1/pulumi-unleash/examples
+module github.com/pulumiverse/pulumi-unleash/examples
 
 go 1.25.11
 

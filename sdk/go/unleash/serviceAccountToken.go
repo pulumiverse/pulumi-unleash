@@ -8,8 +8,8 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash/internal"
 )
 
 // Allows for managing the tokens bound to a service account. Note that service account tokens in Unleash
@@ -27,11 +27,11 @@ import (
 //
 // import (
 //
-//	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash"
 //	"github.com/pulumi/pulumi-command/sdk/go/command/local"
 //	"github.com/pulumi/pulumi-external/sdk/go/external"
 //	"github.com/pulumi/pulumi-null/sdk/go/null"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
 //
 // )
 //

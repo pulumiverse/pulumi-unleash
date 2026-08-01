@@ -7,8 +7,8 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash/internal"
 )
 
 // Manage an Unleash group. The mappingsSso attribute contains external SSO/IdP group names that should map users into this Unleash group.

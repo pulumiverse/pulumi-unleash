@@ -8,8 +8,8 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash/internal"
 )
 
 // ProjectEnvironment schema
@@ -21,8 +21,8 @@ import (
 //
 // import (
 //
-//	"github.com/hagaym1/pulumi-unleash/sdk/v3/go/unleash"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
 //
 // )
 //
