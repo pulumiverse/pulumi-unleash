@@ -8,15 +8,39 @@ Because it bridges the upstream Terraform provider directly, resources and data 
 same schema rather than a parallel reimplementation, so the two stay in lockstep as the upstream
 provider evolves.
 
-## Status: not published
+## Status: prerelease
 
-**Nothing has been released to npm, PyPI, NuGet, or the Pulumi Registry, and the package names are
-provisional.** This repository exists so the provider can be evaluated before it has a permanent
-home — the intent is to contribute it to [Pulumiverse](https://github.com/pulumiverse), the Pulumi
-community organization. Naming and publishing are deliberately deferred until that conversation
-concludes, so there is exactly one package identity and no orphaned early releases.
+Only prerelease versions are published so far. There is no stable `v3.0.0` yet, and no tagged release,
+because the upstream module path problem described [below](#a-note-on-the-upstream-go-module-path)
+has to be fixed first.
 
-To use it today, build from source.
+Pin an exact version. npm gives the `latest` tag to the newest published version, so a bare
+`npm install @pulumiverse/unleash` currently resolves to a prerelease.
+
+## Installation
+
+```bash
+npm install @pulumiverse/unleash@3.0.0-alpha.1786027366
+pip install pulumiverse-unleash==3.0.0a1786027366
+dotnet add package Pulumiverse.Unleash --version 3.0.0-alpha.1786027366
+```
+
+The Go SDK is not published yet. It needs an `sdk/v3.0.0` tag, which is held for the same reason as
+the stable release. Use one of the other three languages, or build from source.
+
+### The plugin binary is not released yet
+
+Installing the SDK is not enough to run `pulumi up`. The schema points `PluginDownloadURL` at this
+repository's GitHub releases, and there are none yet, so the plugin cannot be downloaded. Until the
+first release, build the provider (see [Building from source](#building-from-source) for the
+prerequisites) and install the plugin from disk:
+
+```bash
+make provider
+pulumi plugin install resource unleash 3.0.0-alpha.1786027366 --file bin/pulumi-resource-unleash
+```
+
+The provider is also not in the Pulumi Registry.
 
 ## Building from source
 
