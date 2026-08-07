@@ -13,6 +13,78 @@ import (
 )
 
 // Role schema
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := unleash.NewRole(ctx, "custom_root_role", &unleash.RoleArgs{
+//				Name:        pulumi.String("A custom role"),
+//				Type:        pulumi.String("root-custom"),
+//				Description: pulumi.String("A custom test root role"),
+//				Permissions: unleash.RolePermissionArray{
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("CREATE_PROJECT"),
+//					},
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("UPDATE_PROJECT"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewRole(ctx, "renamed_custom_root_role", &unleash.RoleArgs{
+//				Name:        pulumi.String("Renamed custom role"),
+//				Type:        pulumi.String("root-custom"),
+//				Description: pulumi.String("A custom test root role"),
+//				Permissions: unleash.RolePermissionArray{
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("CREATE_SEGMENT"),
+//					},
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("UPDATE_SEGMENT"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewRole(ctx, "project_role", &unleash.RoleArgs{
+//				Name:        pulumi.String("Custom project role"),
+//				Description: pulumi.String("A custom test project role"),
+//				Type:        pulumi.String("custom"),
+//				Permissions: unleash.RolePermissionArray{
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("CREATE_FEATURE"),
+//					},
+//					&unleash.RolePermissionArgs{
+//						Name: pulumi.String("DELETE_FEATURE"),
+//					},
+//					&unleash.RolePermissionArgs{
+//						Name:        pulumi.String("UPDATE_FEATURE_ENVIRONMENT"),
+//						Environment: pulumi.String("development"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type Role struct {
 	pulumi.CustomResourceState
 

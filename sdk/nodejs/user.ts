@@ -6,6 +6,33 @@ import * as utilities from "./utilities";
 
 /**
  * User schema
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as unleash from "@pulumiverse/unleash";
+ *
+ * const admin = new unleash.User("admin", {
+ *     email: "admin@chucknorris.com",
+ *     name: "Chuck Norris",
+ *     rootRole: 1,
+ *     sendEmail: false,
+ * });
+ * const chuck = new unleash.User("chuck", {
+ *     email: "doesnotneedemail@chucknorris.com",
+ *     name: "Chuck Norris",
+ *     rootRole: 1,
+ *     sendEmail: false,
+ * });
+ * const withPassword = new unleash.User("with_password", {
+ *     email: "visiblepassword@example.com",
+ *     name: "Iam Transparent",
+ *     rootRole: 1,
+ *     sendEmail: false,
+ *     password: "youcanseeme",
+ * });
+ * ```
  */
 export class User extends pulumi.CustomResource {
     /**

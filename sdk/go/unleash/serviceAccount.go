@@ -19,6 +19,40 @@ import (
 //			role id.
 //
 //	        See the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			adminRole, err := unleash.GetRole(ctx, &unleash.LookupRoleArgsArgs{
+//				Name: "Admin",
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewServiceAccount(ctx, "admin_service_account", &unleash.ServiceAccountArgs{
+//				Name:     pulumi.String("something unique"),
+//				Username: pulumi.String("something unique"),
+//				RootRole: pulumi.Int(adminRole.Id),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type ServiceAccount struct {
 	pulumi.CustomResourceState
 

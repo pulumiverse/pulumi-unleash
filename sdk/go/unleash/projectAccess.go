@@ -13,6 +13,102 @@ import (
 )
 
 // ProjectAccess schema
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			sampleProject, err := unleash.NewProject(ctx, "sample_project", &unleash.ProjectArgs{
+//				ProjectId: pulumi.String("sample"),
+//				Name:      pulumi.String("sample-project"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			projectOwnerRole, err := unleash.GetRole(ctx, &unleash.LookupRoleArgsArgs{
+//				Name: "Owner",
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			projectMemberRole, err := unleash.GetRole(ctx, &unleash.LookupRoleArgsArgs{
+//				Name: "Member",
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			testUser, err := unleash.NewUser(ctx, "test_user", &unleash.UserArgs{
+//				Name:      pulumi.String("tester"),
+//				Email:     pulumi.String("test-password@getunleash.io"),
+//				Password:  pulumi.String("you-will-never-guess"),
+//				RootRole:  pulumi.Int(3),
+//				SendEmail: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			testUser2, err := unleash.NewUser(ctx, "test_user_2", &unleash.UserArgs{
+//				Name:      pulumi.String("tester-2"),
+//				Email:     pulumi.String("test-2-password@getunleash.io"),
+//				Password:  pulumi.String("you-will-never-guess"),
+//				RootRole:  pulumi.Int(3),
+//				SendEmail: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewProjectAccess(ctx, "sample_project_access", &unleash.ProjectAccessArgs{
+//				Project: sampleProject.ProjectId,
+//				Roles: unleash.ProjectAccessRoleArray{
+//					&unleash.ProjectAccessRoleArgs{
+//						Role: pulumi.Int(projectOwnerRole.Id),
+//						Users: pulumi.IntArray{
+//							testUser.ID(),
+//						},
+//						Groups: pulumi.IntArray{},
+//					},
+//					&unleash.ProjectAccessRoleArgs{
+//						Role: pulumi.Int(projectMemberRole.Id),
+//						Users: pulumi.IntArray{
+//							testUser2.ID(),
+//						},
+//						Groups: pulumi.IntArray{},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewProjectAccess(ctx, "default_project_access", &unleash.ProjectAccessArgs{
+//				Project: pulumi.String("default"),
+//				Roles: unleash.ProjectAccessRoleArray{
+//					&unleash.ProjectAccessRoleArgs{
+//						Role: pulumi.Int(projectOwnerRole.Id),
+//						Users: pulumi.IntArray{
+//							testUser.ID(),
+//						},
+//						Groups: pulumi.IntArray{},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type ProjectAccess struct {
 	pulumi.CustomResourceState
 

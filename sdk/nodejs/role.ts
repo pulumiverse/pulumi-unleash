@@ -8,6 +8,57 @@ import * as utilities from "./utilities";
 
 /**
  * Role schema
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as unleash from "@pulumiverse/unleash";
+ *
+ * const customRootRole = new unleash.Role("custom_root_role", {
+ *     name: "A custom role",
+ *     type: "root-custom",
+ *     description: "A custom test root role",
+ *     permissions: [
+ *         {
+ *             name: "CREATE_PROJECT",
+ *         },
+ *         {
+ *             name: "UPDATE_PROJECT",
+ *         },
+ *     ],
+ * });
+ * const renamedCustomRootRole = new unleash.Role("renamed_custom_root_role", {
+ *     name: "Renamed custom role",
+ *     type: "root-custom",
+ *     description: "A custom test root role",
+ *     permissions: [
+ *         {
+ *             name: "CREATE_SEGMENT",
+ *         },
+ *         {
+ *             name: "UPDATE_SEGMENT",
+ *         },
+ *     ],
+ * });
+ * const projectRole = new unleash.Role("project_role", {
+ *     name: "Custom project role",
+ *     description: "A custom test project role",
+ *     type: "custom",
+ *     permissions: [
+ *         {
+ *             name: "CREATE_FEATURE",
+ *         },
+ *         {
+ *             name: "DELETE_FEATURE",
+ *         },
+ *         {
+ *             name: "UPDATE_FEATURE_ENVIRONMENT",
+ *             environment: "development",
+ *         },
+ *     ],
+ * });
+ * ```
  */
 export class Role extends pulumi.CustomResource {
     /**

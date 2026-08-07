@@ -12,6 +12,78 @@ namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Role schema
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Unleash = Pulumiverse.Unleash;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var customRootRole = new Unleash.Role("custom_root_role", new()
+    ///     {
+    ///         Name = "A custom role",
+    ///         Type = "root-custom",
+    ///         Description = "A custom test root role",
+    ///         Permissions = new[]
+    ///         {
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "CREATE_PROJECT",
+    ///             },
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "UPDATE_PROJECT",
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    ///     var renamedCustomRootRole = new Unleash.Role("renamed_custom_root_role", new()
+    ///     {
+    ///         Name = "Renamed custom role",
+    ///         Type = "root-custom",
+    ///         Description = "A custom test root role",
+    ///         Permissions = new[]
+    ///         {
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "CREATE_SEGMENT",
+    ///             },
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "UPDATE_SEGMENT",
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    ///     var projectRole = new Unleash.Role("project_role", new()
+    ///     {
+    ///         Name = "Custom project role",
+    ///         Description = "A custom test project role",
+    ///         Type = "custom",
+    ///         Permissions = new[]
+    ///         {
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "CREATE_FEATURE",
+    ///             },
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "DELETE_FEATURE",
+    ///             },
+    ///             new Unleash.Inputs.RolePermissionArgs
+    ///             {
+    ///                 Name = "UPDATE_FEATURE_ENVIRONMENT",
+    ///                 Environment = "development",
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    /// });
+    /// ```
     /// </summary>
     [UnleashResourceType("unleash:index/role:Role")]
     public partial class Role : global::Pulumi.CustomResource

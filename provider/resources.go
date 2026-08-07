@@ -16,11 +16,12 @@ package unleash
 
 import (
 	"path"
+	"regexp"
 
 	// Allow embedding bridge-metadata.json in the provider.
 	_ "embed"
 
-	unleashshim "github.com/Unleash/terraform-provider-unleash/shim"
+	unleashshim "github.com/Unleash/terraform-provider-unleash/v3/shim"
 
 	pfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
@@ -40,6 +41,10 @@ const (
 
 //go:embed cmd/pulumi-resource-unleash/bridge-metadata.json
 var metadata []byte
+
+// pulumi-converter-terraform rejects `import` blocks, which makes tfgen drop the whole
+// surrounding example: `Blocks of type "import" are not expected here`.
+var terraformImportBlock = regexp.MustCompile(`(?m)^import[ \t]*\{[^}]*\}\n+`)
 
 // Provider returns additional overlaid schema and metadata associated with the provider.
 func Provider() tfbridge.ProviderInfo {
@@ -75,8 +80,19 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/pulumiverse/pulumi-unleash",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this should
 		// match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:    "Unleash",
-		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
+		GitHubOrg:               "Unleash",
+		TFProviderModuleVersion: "v3",
+		MetadataInfo:            tfbridge.NewProviderMetadata(metadata),
+		DocRules: &tfbridge.DocRuleInfo{
+			EditRules: func(defaults []tfbridge.DocsEdit) []tfbridge.DocsEdit {
+				return append(defaults, tfbridge.DocsEdit{
+					Path: "*",
+					Edit: func(_ string, content []byte) ([]byte, error) {
+						return terraformImportBlock.ReplaceAll(content, nil), nil
+					},
+				})
+			},
+		},
 		Config: map[string]*tfbridge.SchemaInfo{
 			"base_url": {
 				Default: &tfbridge.DefaultInfo{EnvVars: []string{"UNLEASH_URL"}},
