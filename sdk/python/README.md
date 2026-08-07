@@ -14,8 +14,10 @@ Only prerelease versions are published so far. There is no stable `v3.0.0` yet, 
 because the upstream module path problem described [below](#a-note-on-the-upstream-go-module-path)
 has to be fixed first.
 
-Pin an exact version. npm gives the `latest` tag to the newest published version, so a bare
-`npm install @pulumiverse/unleash` currently resolves to a prerelease.
+Pin an exact version. Prereleases are published under npm's `dev` tag, but npm assigned `latest` to
+the first version ever published, which is itself a prerelease, so a bare
+`npm install @pulumiverse/unleash` resolves to a prerelease and not necessarily the newest one.
+`npm install @pulumiverse/unleash@dev` gets the newest.
 
 ## Installation
 
