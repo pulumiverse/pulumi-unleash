@@ -1,3 +1,0 @@
-name: oss-ts
-runtime: nodejs
-description: An OSS-tier typescript program for integration testing against a real Unleash server
