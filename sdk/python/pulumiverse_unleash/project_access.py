@@ -110,6 +110,53 @@ class ProjectAccess(pulumi.CustomResource):
         """
         ProjectAccess schema
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
+
+        sample_project = unleash.Project("sample_project",
+            project_id="sample",
+            name="sample-project")
+        project_owner_role = unleash.get_role(name="Owner")
+        project_member_role = unleash.get_role(name="Member")
+        test_user = unleash.User("test_user",
+            name="tester",
+            email="test-password@getunleash.io",
+            password="you-will-never-guess",
+            root_role=3,
+            send_email=False)
+        test_user2 = unleash.User("test_user_2",
+            name="tester-2",
+            email="test-2-password@getunleash.io",
+            password="you-will-never-guess",
+            root_role=3,
+            send_email=False)
+        sample_project_access = unleash.ProjectAccess("sample_project_access",
+            project=sample_project.project_id,
+            roles=[
+                {
+                    "role": project_owner_role.id,
+                    "users": [test_user.id.apply(lambda x: int(x))],
+                    "groups": [],
+                },
+                {
+                    "role": project_member_role.id,
+                    "users": [test_user2.id.apply(lambda x: int(x))],
+                    "groups": [],
+                },
+            ])
+        default_project_access = unleash.ProjectAccess("default_project_access",
+            project="default",
+            roles=[{
+                "role": project_owner_role.id,
+                "users": [test_user.id.apply(lambda x: int(x))],
+                "groups": [],
+            }])
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -124,6 +171,53 @@ class ProjectAccess(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         ProjectAccess schema
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
+
+        sample_project = unleash.Project("sample_project",
+            project_id="sample",
+            name="sample-project")
+        project_owner_role = unleash.get_role(name="Owner")
+        project_member_role = unleash.get_role(name="Member")
+        test_user = unleash.User("test_user",
+            name="tester",
+            email="test-password@getunleash.io",
+            password="you-will-never-guess",
+            root_role=3,
+            send_email=False)
+        test_user2 = unleash.User("test_user_2",
+            name="tester-2",
+            email="test-2-password@getunleash.io",
+            password="you-will-never-guess",
+            root_role=3,
+            send_email=False)
+        sample_project_access = unleash.ProjectAccess("sample_project_access",
+            project=sample_project.project_id,
+            roles=[
+                {
+                    "role": project_owner_role.id,
+                    "users": [test_user.id.apply(lambda x: int(x))],
+                    "groups": [],
+                },
+                {
+                    "role": project_member_role.id,
+                    "users": [test_user2.id.apply(lambda x: int(x))],
+                    "groups": [],
+                },
+            ])
+        default_project_access = unleash.ProjectAccess("default_project_access",
+            project="default",
+            roles=[{
+                "role": project_owner_role.id,
+                "users": [test_user.id.apply(lambda x: int(x))],
+                "groups": [],
+            }])
+        ```
 
 
         :param str resource_name: The name of the resource.

@@ -17,6 +17,31 @@ namespace Pulumiverse.Unleash
     /// 		role id.
     /// 
     ///         See the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Unleash = Pulumiverse.Unleash;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var adminRole = Unleash.GetRole.Invoke(new()
+    ///     {
+    ///         Name = "Admin",
+    ///     });
+    /// 
+    ///     var adminServiceAccount = new Unleash.ServiceAccount("admin_service_account", new()
+    ///     {
+    ///         Name = "something unique",
+    ///         Username = "something unique",
+    ///         RootRole = adminRole.Apply(getRoleResult =&gt; getRoleResult.Id),
+    ///     });
+    /// 
+    /// });
+    /// ```
     /// </summary>
     [UnleashResourceType("unleash:index/serviceAccount:ServiceAccount")]
     public partial class ServiceAccount : global::Pulumi.CustomResource

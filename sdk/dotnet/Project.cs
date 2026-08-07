@@ -12,6 +12,53 @@ namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// Project schema
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Unleash = Pulumiverse.Unleash;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var defaultProject = new Unleash.Project("default_project", new()
+    ///     {
+    ///         ProjectId = "default",
+    ///         Name = "Default project",
+    ///         Description = "Default project now managed by Terraform",
+    ///     });
+    /// 
+    ///     var testProject = new Unleash.Project("test_project", new()
+    ///     {
+    ///         ProjectId = "my_project",
+    ///         Name = "My Terraform project",
+    ///         Description = "A project created through terraform",
+    ///         Mode = "protected",
+    ///         FeatureNaming = new Unleash.Inputs.ProjectFeatureNamingArgs
+    ///         {
+    ///             Pattern = "^feature_[a-z0-9_-]+$",
+    ///             Example = "feature_user_signup",
+    ///             Description = "Feature keys must start with feature_ and use lowercase alphanumerics.",
+    ///         },
+    ///         LinkTemplates = new[]
+    ///         {
+    ///             new Unleash.Inputs.ProjectLinkTemplateArgs
+    ///             {
+    ///                 Title = "Product Spec",
+    ///                 UrlTemplate = "https://docs.example.com/projects/{{project}}/features/{{feature}}",
+    ///             },
+    ///             new Unleash.Inputs.ProjectLinkTemplateArgs
+    ///             {
+    ///                 Title = "Issue Tracker",
+    ///                 UrlTemplate = "https://issues.example.com/browse/{{feature}}",
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    /// });
+    /// ```
     /// </summary>
     [UnleashResourceType("unleash:index/project:Project")]
     public partial class Project : global::Pulumi.CustomResource

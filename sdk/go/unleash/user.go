@@ -13,6 +13,54 @@ import (
 )
 
 // User schema
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := unleash.NewUser(ctx, "admin", &unleash.UserArgs{
+//				Email:     pulumi.String("admin@chucknorris.com"),
+//				Name:      pulumi.String("Chuck Norris"),
+//				RootRole:  pulumi.Int(1),
+//				SendEmail: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewUser(ctx, "chuck", &unleash.UserArgs{
+//				Email:     pulumi.String("doesnotneedemail@chucknorris.com"),
+//				Name:      pulumi.String("Chuck Norris"),
+//				RootRole:  pulumi.Int(1),
+//				SendEmail: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewUser(ctx, "with_password", &unleash.UserArgs{
+//				Email:     pulumi.String("visiblepassword@example.com"),
+//				Name:      pulumi.String("Iam Transparent"),
+//				RootRole:  pulumi.Int(1),
+//				SendEmail: pulumi.Bool(false),
+//				Password:  pulumi.String("youcanseeme"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type User struct {
 	pulumi.CustomResourceState
 

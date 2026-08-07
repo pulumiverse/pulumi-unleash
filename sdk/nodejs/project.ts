@@ -8,6 +8,40 @@ import * as utilities from "./utilities";
 
 /**
  * Project schema
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as unleash from "@pulumiverse/unleash";
+ *
+ * const defaultProject = new unleash.Project("default_project", {
+ *     projectId: "default",
+ *     name: "Default project",
+ *     description: "Default project now managed by Terraform",
+ * });
+ * const testProject = new unleash.Project("test_project", {
+ *     projectId: "my_project",
+ *     name: "My Terraform project",
+ *     description: "A project created through terraform",
+ *     mode: "protected",
+ *     featureNaming: {
+ *         pattern: "^feature_[a-z0-9_-]+$",
+ *         example: "feature_user_signup",
+ *         description: "Feature keys must start with feature_ and use lowercase alphanumerics.",
+ *     },
+ *     linkTemplates: [
+ *         {
+ *             title: "Product Spec",
+ *             urlTemplate: "https://docs.example.com/projects/{{project}}/features/{{feature}}",
+ *         },
+ *         {
+ *             title: "Issue Tracker",
+ *             urlTemplate: "https://issues.example.com/browse/{{feature}}",
+ *         },
+ *     ],
+ * });
+ * ```
  */
 export class Project extends pulumi.CustomResource {
     /**

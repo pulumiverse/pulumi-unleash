@@ -12,7 +12,7 @@ make tfgen >/dev/null
 
 if ! diff -q "$BASELINE" "$SCHEMA" >/dev/null; then
   echo "Schema drift detected. Review, then update $BASELINE deliberately:"
-  diff -u "$BASELINE" "$SCHEMA" | head -60
+  diff -u "$BASELINE" "$SCHEMA" | head -60 || true
   exit 1
 fi
 echo "Schema matches baseline."

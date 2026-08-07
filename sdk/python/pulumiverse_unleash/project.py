@@ -243,6 +243,38 @@ class Project(pulumi.CustomResource):
         """
         Project schema
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        default_project = unleash.Project("default_project",
+            project_id="default",
+            name="Default project",
+            description="Default project now managed by Terraform")
+        test_project = unleash.Project("test_project",
+            project_id="my_project",
+            name="My Terraform project",
+            description="A project created through terraform",
+            mode="protected",
+            feature_naming={
+                "pattern": "^feature_[a-z0-9_-]+$",
+                "example": "feature_user_signup",
+                "description": "Feature keys must start with feature_ and use lowercase alphanumerics.",
+            },
+            link_templates=[
+                {
+                    "title": "Product Spec",
+                    "url_template": "https://docs.example.com/projects/{{project}}/features/{{feature}}",
+                },
+                {
+                    "title": "Issue Tracker",
+                    "url_template": "https://issues.example.com/browse/{{feature}}",
+                },
+            ])
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -261,6 +293,38 @@ class Project(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Project schema
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        default_project = unleash.Project("default_project",
+            project_id="default",
+            name="Default project",
+            description="Default project now managed by Terraform")
+        test_project = unleash.Project("test_project",
+            project_id="my_project",
+            name="My Terraform project",
+            description="A project created through terraform",
+            mode="protected",
+            feature_naming={
+                "pattern": "^feature_[a-z0-9_-]+$",
+                "example": "feature_user_signup",
+                "description": "Feature keys must start with feature_ and use lowercase alphanumerics.",
+            },
+            link_templates=[
+                {
+                    "title": "Product Spec",
+                    "url_template": "https://docs.example.com/projects/{{project}}/features/{{feature}}",
+                },
+                {
+                    "title": "Issue Tracker",
+                    "url_template": "https://issues.example.com/browse/{{feature}}",
+                },
+            ])
+        ```
 
 
         :param str resource_name: The name of the resource.

@@ -241,6 +241,30 @@ class User(pulumi.CustomResource):
         """
         User schema
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        admin = unleash.User("admin",
+            email="admin@chucknorris.com",
+            name="Chuck Norris",
+            root_role=1,
+            send_email=False)
+        chuck = unleash.User("chuck",
+            email="doesnotneedemail@chucknorris.com",
+            name="Chuck Norris",
+            root_role=1,
+            send_email=False)
+        with_password = unleash.User("with_password",
+            email="visiblepassword@example.com",
+            name="Iam Transparent",
+            root_role=1,
+            send_email=False,
+            password="youcanseeme")
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -259,6 +283,30 @@ class User(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         User schema
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        admin = unleash.User("admin",
+            email="admin@chucknorris.com",
+            name="Chuck Norris",
+            root_role=1,
+            send_email=False)
+        chuck = unleash.User("chuck",
+            email="doesnotneedemail@chucknorris.com",
+            name="Chuck Norris",
+            root_role=1,
+            send_email=False)
+        with_password = unleash.User("with_password",
+            email="visiblepassword@example.com",
+            name="Iam Transparent",
+            root_role=1,
+            send_email=False,
+            password="youcanseeme")
+        ```
 
 
         :param str resource_name: The name of the resource.

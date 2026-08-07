@@ -13,6 +13,58 @@ import (
 )
 
 // Project schema
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-unleash/sdk/v3/go/unleash"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := unleash.NewProject(ctx, "default_project", &unleash.ProjectArgs{
+//				ProjectId:   pulumi.String("default"),
+//				Name:        pulumi.String("Default project"),
+//				Description: pulumi.String("Default project now managed by Terraform"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = unleash.NewProject(ctx, "test_project", &unleash.ProjectArgs{
+//				ProjectId:   pulumi.String("my_project"),
+//				Name:        pulumi.String("My Terraform project"),
+//				Description: pulumi.String("A project created through terraform"),
+//				Mode:        pulumi.String("protected"),
+//				FeatureNaming: &unleash.ProjectFeatureNamingArgs{
+//					Pattern:     pulumi.String("^feature_[a-z0-9_-]+$"),
+//					Example:     pulumi.String("feature_user_signup"),
+//					Description: pulumi.String("Feature keys must start with feature_ and use lowercase alphanumerics."),
+//				},
+//				LinkTemplates: unleash.ProjectLinkTemplateArray{
+//					&unleash.ProjectLinkTemplateArgs{
+//						Title:       pulumi.String("Product Spec"),
+//						UrlTemplate: pulumi.String("https://docs.example.com/projects/{{project}}/features/{{feature}}"),
+//					},
+//					&unleash.ProjectLinkTemplateArgs{
+//						Title:       pulumi.String("Issue Tracker"),
+//						UrlTemplate: pulumi.String("https://issues.example.com/browse/{{feature}}"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type Project struct {
 	pulumi.CustomResourceState
 

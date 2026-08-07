@@ -11,6 +11,22 @@ import * as utilities from "./utilities";
  * 		role id.
  *
  *         See the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as unleash from "@pulumiverse/unleash";
+ *
+ * const adminRole = unleash.getRole({
+ *     name: "Admin",
+ * });
+ * const adminServiceAccount = new unleash.ServiceAccount("admin_service_account", {
+ *     name: "something unique",
+ *     username: "something unique",
+ *     rootRole: adminRole.then(adminRole => adminRole.id),
+ * });
+ * ```
  */
 export class ServiceAccount extends pulumi.CustomResource {
     /**

@@ -8,6 +8,61 @@ import * as utilities from "./utilities";
 
 /**
  * ProjectAccess schema
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as unleash from "@pulumiverse/unleash";
+ *
+ * const sampleProject = new unleash.Project("sample_project", {
+ *     projectId: "sample",
+ *     name: "sample-project",
+ * });
+ * const projectOwnerRole = unleash.getRole({
+ *     name: "Owner",
+ * });
+ * const projectMemberRole = unleash.getRole({
+ *     name: "Member",
+ * });
+ * const testUser = new unleash.User("test_user", {
+ *     name: "tester",
+ *     email: "test-password@getunleash.io",
+ *     password: "you-will-never-guess",
+ *     rootRole: 3,
+ *     sendEmail: false,
+ * });
+ * const testUser2 = new unleash.User("test_user_2", {
+ *     name: "tester-2",
+ *     email: "test-2-password@getunleash.io",
+ *     password: "you-will-never-guess",
+ *     rootRole: 3,
+ *     sendEmail: false,
+ * });
+ * const sampleProjectAccess = new unleash.ProjectAccess("sample_project_access", {
+ *     project: sampleProject.projectId,
+ *     roles: [
+ *         {
+ *             role: projectOwnerRole.then(projectOwnerRole => projectOwnerRole.id),
+ *             users: [testUser.id.apply(x =>Number(x))],
+ *             groups: [],
+ *         },
+ *         {
+ *             role: projectMemberRole.then(projectMemberRole => projectMemberRole.id),
+ *             users: [testUser2.id.apply(x =>Number(x))],
+ *             groups: [],
+ *         },
+ *     ],
+ * });
+ * const defaultProjectAccess = new unleash.ProjectAccess("default_project_access", {
+ *     project: "default",
+ *     roles: [{
+ *         role: projectOwnerRole.then(projectOwnerRole => projectOwnerRole.id),
+ *         users: [testUser.id.apply(x =>Number(x))],
+ *         groups: [],
+ *     }],
+ * });
+ * ```
  */
 export class ProjectAccess extends pulumi.CustomResource {
     /**

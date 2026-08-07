@@ -12,6 +12,44 @@ namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// User schema
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Unleash = Pulumiverse.Unleash;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var admin = new Unleash.User("admin", new()
+    ///     {
+    ///         Email = "admin@chucknorris.com",
+    ///         Name = "Chuck Norris",
+    ///         RootRole = 1,
+    ///         SendEmail = false,
+    ///     });
+    /// 
+    ///     var chuck = new Unleash.User("chuck", new()
+    ///     {
+    ///         Email = "doesnotneedemail@chucknorris.com",
+    ///         Name = "Chuck Norris",
+    ///         RootRole = 1,
+    ///         SendEmail = false,
+    ///     });
+    /// 
+    ///     var withPassword = new Unleash.User("with_password", new()
+    ///     {
+    ///         Email = "visiblepassword@example.com",
+    ///         Name = "Iam Transparent",
+    ///         RootRole = 1,
+    ///         SendEmail = false,
+    ///         Password = "youcanseeme",
+    ///     });
+    /// 
+    /// });
+    /// ```
     /// </summary>
     [UnleashResourceType("unleash:index/user:User")]
     public partial class User : global::Pulumi.CustomResource

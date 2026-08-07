@@ -175,6 +175,54 @@ class Role(pulumi.CustomResource):
         """
         Role schema
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        custom_root_role = unleash.Role("custom_root_role",
+            name="A custom role",
+            type="root-custom",
+            description="A custom test root role",
+            permissions=[
+                {
+                    "name": "CREATE_PROJECT",
+                },
+                {
+                    "name": "UPDATE_PROJECT",
+                },
+            ])
+        renamed_custom_root_role = unleash.Role("renamed_custom_root_role",
+            name="Renamed custom role",
+            type="root-custom",
+            description="A custom test root role",
+            permissions=[
+                {
+                    "name": "CREATE_SEGMENT",
+                },
+                {
+                    "name": "UPDATE_SEGMENT",
+                },
+            ])
+        project_role = unleash.Role("project_role",
+            name="Custom project role",
+            description="A custom test project role",
+            type="custom",
+            permissions=[
+                {
+                    "name": "CREATE_FEATURE",
+                },
+                {
+                    "name": "DELETE_FEATURE",
+                },
+                {
+                    "name": "UPDATE_FEATURE_ENVIRONMENT",
+                    "environment": "development",
+                },
+            ])
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -191,6 +239,54 @@ class Role(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Role schema
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumiverse_unleash as unleash
+
+        custom_root_role = unleash.Role("custom_root_role",
+            name="A custom role",
+            type="root-custom",
+            description="A custom test root role",
+            permissions=[
+                {
+                    "name": "CREATE_PROJECT",
+                },
+                {
+                    "name": "UPDATE_PROJECT",
+                },
+            ])
+        renamed_custom_root_role = unleash.Role("renamed_custom_root_role",
+            name="Renamed custom role",
+            type="root-custom",
+            description="A custom test root role",
+            permissions=[
+                {
+                    "name": "CREATE_SEGMENT",
+                },
+                {
+                    "name": "UPDATE_SEGMENT",
+                },
+            ])
+        project_role = unleash.Role("project_role",
+            name="Custom project role",
+            description="A custom test project role",
+            type="custom",
+            permissions=[
+                {
+                    "name": "CREATE_FEATURE",
+                },
+                {
+                    "name": "DELETE_FEATURE",
+                },
+                {
+                    "name": "UPDATE_FEATURE_ENVIRONMENT",
+                    "environment": "development",
+                },
+            ])
+        ```
 
 
         :param str resource_name: The name of the resource.

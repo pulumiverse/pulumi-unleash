@@ -146,6 +146,20 @@ class ServiceAccount(pulumi.CustomResource):
 
                 See the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
+
+        admin_role = unleash.get_role(name="Admin")
+        admin_service_account = unleash.ServiceAccount("admin_service_account",
+            name="something unique",
+            username="something unique",
+            root_role=admin_role.id)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -166,6 +180,20 @@ class ServiceAccount(pulumi.CustomResource):
         		role id.
 
                 See the [Unleash documentation](https://docs.getunleash.io/reference/service-accounts) for more information.
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_unleash as unleash
+        import pulumiverse_unleash as unleash
+
+        admin_role = unleash.get_role(name="Admin")
+        admin_service_account = unleash.ServiceAccount("admin_service_account",
+            name="something unique",
+            username="something unique",
+            root_role=admin_role.id)
+        ```
 
 
         :param str resource_name: The name of the resource.

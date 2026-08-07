@@ -12,6 +12,96 @@ namespace Pulumiverse.Unleash
 {
     /// <summary>
     /// ProjectAccess schema
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Unleash = Pulumiverse.Unleash;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var sampleProject = new Unleash.Project("sample_project", new()
+    ///     {
+    ///         ProjectId = "sample",
+    ///         Name = "sample-project",
+    ///     });
+    /// 
+    ///     var projectOwnerRole = Unleash.GetRole.Invoke(new()
+    ///     {
+    ///         Name = "Owner",
+    ///     });
+    /// 
+    ///     var projectMemberRole = Unleash.GetRole.Invoke(new()
+    ///     {
+    ///         Name = "Member",
+    ///     });
+    /// 
+    ///     var testUser = new Unleash.User("test_user", new()
+    ///     {
+    ///         Name = "tester",
+    ///         Email = "test-password@getunleash.io",
+    ///         Password = "you-will-never-guess",
+    ///         RootRole = 3,
+    ///         SendEmail = false,
+    ///     });
+    /// 
+    ///     var testUser2 = new Unleash.User("test_user_2", new()
+    ///     {
+    ///         Name = "tester-2",
+    ///         Email = "test-2-password@getunleash.io",
+    ///         Password = "you-will-never-guess",
+    ///         RootRole = 3,
+    ///         SendEmail = false,
+    ///     });
+    /// 
+    ///     var sampleProjectAccess = new Unleash.ProjectAccess("sample_project_access", new()
+    ///     {
+    ///         Project = sampleProject.ProjectId,
+    ///         Roles = new[]
+    ///         {
+    ///             new Unleash.Inputs.ProjectAccessRoleArgs
+    ///             {
+    ///                 Role = projectOwnerRole.Apply(getRoleResult =&gt; getRoleResult.Id),
+    ///                 Users = new[]
+    ///                 {
+    ///                     testUser.Id,
+    ///                 },
+    ///                 Groups = new() { },
+    ///             },
+    ///             new Unleash.Inputs.ProjectAccessRoleArgs
+    ///             {
+    ///                 Role = projectMemberRole.Apply(getRoleResult =&gt; getRoleResult.Id),
+    ///                 Users = new[]
+    ///                 {
+    ///                     testUser2.Id,
+    ///                 },
+    ///                 Groups = new() { },
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    ///     var defaultProjectAccess = new Unleash.ProjectAccess("default_project_access", new()
+    ///     {
+    ///         Project = "default",
+    ///         Roles = new[]
+    ///         {
+    ///             new Unleash.Inputs.ProjectAccessRoleArgs
+    ///             {
+    ///                 Role = projectOwnerRole.Apply(getRoleResult =&gt; getRoleResult.Id),
+    ///                 Users = new[]
+    ///                 {
+    ///                     testUser.Id,
+    ///                 },
+    ///                 Groups = new() { },
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    /// });
+    /// ```
     /// </summary>
     [UnleashResourceType("unleash:index/projectAccess:ProjectAccess")]
     public partial class ProjectAccess : global::Pulumi.CustomResource
