@@ -8,41 +8,24 @@ Because it bridges the upstream Terraform provider directly, resources and data 
 same schema rather than a parallel reimplementation, so the two stay in lockstep as the upstream
 provider evolves.
 
-## Status: prerelease
-
-Only prerelease versions are published so far. There is no stable `v3.0.0` yet, and no tagged release,
-because the upstream module path problem described [below](#a-note-on-the-upstream-go-module-path)
-has to be fixed first.
-
-Pin an exact version. Prereleases are published under npm's `dev` tag, but npm assigned `latest` to
-the first version ever published, which is itself a prerelease, so a bare
-`npm install @pulumiverse/unleash` resolves to a prerelease and not necessarily the newest one.
-`npm install @pulumiverse/unleash@dev` gets the newest.
-
 ## Installation
 
 ```bash
-npm install @pulumiverse/unleash@3.0.0-alpha.1786027366
-pip install pulumiverse-unleash==3.0.0a1786027366
-dotnet add package Pulumiverse.Unleash --version 3.0.0-alpha.1786027366
+npm install @pulumiverse/unleash
+pip install pulumiverse-unleash
+dotnet add package Pulumiverse.Unleash
+go get github.com/pulumiverse/pulumi-unleash/sdk/v3
 ```
 
-The Go SDK is not published yet. It needs an `sdk/v3.0.0` tag, which is held for the same reason as
-the stable release. Use one of the other three languages, or build from source.
+The plugin binary is resolved from this repository's GitHub releases via the `PluginDownloadURL`
+baked into the schema, so `pulumi up` fetches it with no extra configuration.
 
-### The plugin binary is not released yet
-
-Installing the SDK is not enough to run `pulumi up`. The schema points `PluginDownloadURL` at this
-repository's GitHub releases, and there are none yet, so the plugin cannot be downloaded. Until the
-first release, build the provider (see [Building from source](#building-from-source) for the
-prerequisites) and install the plugin from disk:
+The provider is not in the Pulumi Registry, so a *manual* `pulumi plugin install` needs the server
+spelled out. Installing the SDK is the normal path and needs none of this:
 
 ```bash
-make provider
-pulumi plugin install resource unleash 3.0.0-alpha.1786027366 --file bin/pulumi-resource-unleash
+pulumi plugin install resource unleash 3.0.0 --server github://api.github.com/pulumiverse
 ```
-
-The provider is also not in the Pulumi Registry.
 
 ## Building from source
 
@@ -99,14 +82,6 @@ requests from forks, so fork CI cannot exercise Enterprise resources either.
 The major version tracks the upstream Terraform provider's major version, matching the convention
 other bridged community providers use. This provider's 3.x line bridges
 `terraform-provider-unleash` 3.x.
-
-## A note on the upstream Go module path
-
-`github.com/Unleash/terraform-provider-unleash` declares no `/v3` module path suffix despite tagging
-`v3.x` releases, so Go cannot resolve any of its v2 or v3 tags as a dependency — the module proxy's
-`@latest` for that path resolves to v1.4.1. This provider therefore pins the upstream at a
-pseudo-version rather than a release tag. Adding the suffix upstream would make this a normal semver
-dependency.
 
 ## License
 
