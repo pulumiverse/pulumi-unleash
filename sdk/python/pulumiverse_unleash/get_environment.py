@@ -26,10 +26,13 @@ class GetEnvironmentResult:
     """
     A collection of values returned by getEnvironment.
     """
-    def __init__(__self__, name=None, type=None):
+    def __init__(__self__, name=None, required_approvals=None, type=None):
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
+        if required_approvals and not isinstance(required_approvals, int):
+            raise TypeError("Expected argument 'required_approvals' to be a int")
+        pulumi.set(__self__, "required_approvals", required_approvals)
         if type and not isinstance(type, str):
             raise TypeError("Expected argument 'type' to be a str")
         pulumi.set(__self__, "type", type)
@@ -41,6 +44,14 @@ class GetEnvironmentResult:
         The name of the environment. Must be a URL-friendly string according to RFC 3968.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="requiredApprovals")
+    def required_approvals(self) -> _builtins.int:
+        """
+        The number of approvals a change request must collect before it can be applied in this environment. Set when the environment turns on environment-level change requests, null otherwise. Use the required*approvals attribute of the unleash*environment resource to configure it.
+        """
+        return pulumi.get(self, "required_approvals")
 
     @_builtins.property
     @pulumi.getter
@@ -58,6 +69,7 @@ class AwaitableGetEnvironmentResult(GetEnvironmentResult):
             yield self
         return GetEnvironmentResult(
             name=self.name,
+            required_approvals=self.required_approvals,
             type=self.type)
 
 
@@ -79,6 +91,7 @@ def get_environment(name: Optional[_builtins.str] = None,
 
     return AwaitableGetEnvironmentResult(
         name=pulumi.get(__ret__, 'name'),
+        required_approvals=pulumi.get(__ret__, 'required_approvals'),
         type=pulumi.get(__ret__, 'type'))
 def get_environment_output(name: pulumi.Input[Optional[_builtins.str]] = None,
                            type: pulumi.Input[Optional[_builtins.str]] = None,
@@ -97,4 +110,5 @@ def get_environment_output(name: pulumi.Input[Optional[_builtins.str]] = None,
     __ret__ = pulumi.runtime.invoke_output('unleash:index/getEnvironment:getEnvironment', __args__, opts=opts, typ=GetEnvironmentResult)
     return __ret__.apply(lambda __response__: GetEnvironmentResult(
         name=pulumi.get(__response__, 'name'),
+        required_approvals=pulumi.get(__response__, 'required_approvals'),
         type=pulumi.get(__response__, 'type')))

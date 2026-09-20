@@ -17,6 +17,13 @@ import * as utilities from "./utilities";
  *     name: "outerspace",
  *     type: "vacuum",
  * });
+ * // Preconfigure environment level change requests: every project using this
+ * // environment inherits the requirement of two approvals per change request.
+ * const spaceStation = new unleash.Environment("space_station", {
+ *     name: "space-station",
+ *     type: "production",
+ *     requiredApprovals: 2,
+ * });
  * ```
  */
 export class Environment extends pulumi.CustomResource {
@@ -52,6 +59,10 @@ export class Environment extends pulumi.CustomResource {
      */
     declare public readonly name: pulumi.Output<string>;
     /**
+     * The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+     */
+    declare public readonly requiredApprovals: pulumi.Output<number | undefined>;
+    /**
      * The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
      */
     declare public readonly type: pulumi.Output<string>;
@@ -70,6 +81,7 @@ export class Environment extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as EnvironmentState | undefined;
             resourceInputs["name"] = state?.name;
+            resourceInputs["requiredApprovals"] = state?.requiredApprovals;
             resourceInputs["type"] = state?.type;
         } else {
             const args = argsOrState as EnvironmentArgs | undefined;
@@ -77,6 +89,7 @@ export class Environment extends pulumi.CustomResource {
                 throw new Error("Missing required property 'type'");
             }
             resourceInputs["name"] = args?.name;
+            resourceInputs["requiredApprovals"] = args?.requiredApprovals;
             resourceInputs["type"] = args?.type;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -93,6 +106,10 @@ export interface EnvironmentState {
      */
     name?: pulumi.Input<string | undefined>;
     /**
+     * The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+     */
+    requiredApprovals?: pulumi.Input<number | undefined>;
+    /**
      * The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
      */
     type?: pulumi.Input<string | undefined>;
@@ -106,6 +123,10 @@ export interface EnvironmentArgs {
      * The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
      */
     name?: pulumi.Input<string | undefined>;
+    /**
+     * The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+     */
+    requiredApprovals?: pulumi.Input<number | undefined>;
     /**
      * The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
      */
