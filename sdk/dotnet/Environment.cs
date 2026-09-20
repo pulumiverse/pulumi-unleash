@@ -29,6 +29,15 @@ namespace Pulumiverse.Unleash
     ///         Type = "vacuum",
     ///     });
     /// 
+    ///     // Preconfigure environment level change requests: every project using this
+    ///     // environment inherits the requirement of two approvals per change request.
+    ///     var spaceStation = new Unleash.Environment("space_station", new()
+    ///     {
+    ///         Name = "space-station",
+    ///         Type = "production",
+    ///         RequiredApprovals = 2,
+    ///     });
+    /// 
     /// });
     /// ```
     /// </summary>
@@ -40,6 +49,12 @@ namespace Pulumiverse.Unleash
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        /// </summary>
+        [Output("requiredApprovals")]
+        public Output<int?> RequiredApprovals { get; private set; } = null!;
 
         /// <summary>
         /// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
@@ -101,6 +116,12 @@ namespace Pulumiverse.Unleash
         public Input<string>? Name { get; set; }
 
         /// <summary>
+        /// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        /// </summary>
+        [Input("requiredApprovals")]
+        public Input<int>? RequiredApprovals { get; set; }
+
+        /// <summary>
         /// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         /// </summary>
         [Input("type", required: true)]
@@ -119,6 +140,12 @@ namespace Pulumiverse.Unleash
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        /// </summary>
+        [Input("requiredApprovals")]
+        public Input<int>? RequiredApprovals { get; set; }
 
         /// <summary>
         /// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.

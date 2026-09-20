@@ -34,6 +34,8 @@ type LookupEnvironmentArgs struct {
 type LookupEnvironmentResult struct {
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968.
 	Name string `pulumi:"name"`
+	// The number of approvals a change request must collect before it can be applied in this environment. Set when the environment turns on environment-level change requests, null otherwise. Use the required*approvals attribute of the unleash*environment resource to configure it.
+	RequiredApprovals int `pulumi:"requiredApprovals"`
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type string `pulumi:"type"`
 }
@@ -77,6 +79,11 @@ func (o LookupEnvironmentResultOutput) ToLookupEnvironmentResultOutputWithContex
 // The name of the environment. Must be a URL-friendly string according to RFC 3968.
 func (o LookupEnvironmentResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupEnvironmentResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The number of approvals a change request must collect before it can be applied in this environment. Set when the environment turns on environment-level change requests, null otherwise. Use the required*approvals attribute of the unleash*environment resource to configure it.
+func (o LookupEnvironmentResultOutput) RequiredApprovals() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupEnvironmentResult) int { return v.RequiredApprovals }).(pulumi.IntOutput)
 }
 
 // The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.

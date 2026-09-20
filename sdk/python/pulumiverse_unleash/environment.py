@@ -20,16 +20,20 @@ __all__ = ['EnvironmentArgs', 'Environment']
 class EnvironmentArgs:
     def __init__(__self__, *,
                  type: pulumi.Input[_builtins.str],
-                 name: pulumi.Input[Optional[_builtins.str]] = None):
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 required_approvals: pulumi.Input[Optional[_builtins.int]] = None):
         """
         The set of arguments for constructing a Environment resource.
 
         :param pulumi.Input[_builtins.str] type: The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         :param pulumi.Input[_builtins.str] name: The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
+        :param pulumi.Input[_builtins.int] required_approvals: The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
         """
         pulumi.set(__self__, "type", type)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if required_approvals is not None:
+            pulumi.set(__self__, "required_approvals", required_approvals)
 
     @_builtins.property
     @pulumi.getter
@@ -55,20 +59,36 @@ class EnvironmentArgs:
     def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
+    @_builtins.property
+    @pulumi.getter(name="requiredApprovals")
+    def required_approvals(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        """
+        return pulumi.get(self, "required_approvals")
+
+    @required_approvals.setter
+    def required_approvals(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "required_approvals", value)
+
 
 @pulumi.input_type
 class _EnvironmentState:
     def __init__(__self__, *,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
+                 required_approvals: pulumi.Input[Optional[_builtins.int]] = None,
                  type: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Environment resources.
 
         :param pulumi.Input[_builtins.str] name: The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
+        :param pulumi.Input[_builtins.int] required_approvals: The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
         :param pulumi.Input[_builtins.str] type: The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         """
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if required_approvals is not None:
+            pulumi.set(__self__, "required_approvals", required_approvals)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -83,6 +103,18 @@ class _EnvironmentState:
     @name.setter
     def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="requiredApprovals")
+    def required_approvals(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        """
+        return pulumi.get(self, "required_approvals")
+
+    @required_approvals.setter
+    def required_approvals(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "required_approvals", value)
 
     @_builtins.property
     @pulumi.getter
@@ -104,6 +136,7 @@ class Environment(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
+                 required_approvals: pulumi.Input[Optional[_builtins.int]] = None,
                  type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
@@ -118,12 +151,19 @@ class Environment(pulumi.CustomResource):
         space = unleash.Environment("space",
             name="outerspace",
             type="vacuum")
+        # Preconfigure environment level change requests: every project using this
+        # environment inherits the requirement of two approvals per change request.
+        space_station = unleash.Environment("space_station",
+            name="space-station",
+            type="production",
+            required_approvals=2)
         ```
 
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
+        :param pulumi.Input[_builtins.int] required_approvals: The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
         :param pulumi.Input[_builtins.str] type: The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         """
         ...
@@ -144,6 +184,12 @@ class Environment(pulumi.CustomResource):
         space = unleash.Environment("space",
             name="outerspace",
             type="vacuum")
+        # Preconfigure environment level change requests: every project using this
+        # environment inherits the requirement of two approvals per change request.
+        space_station = unleash.Environment("space_station",
+            name="space-station",
+            type="production",
+            required_approvals=2)
         ```
 
 
@@ -163,6 +209,7 @@ class Environment(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
+                 required_approvals: pulumi.Input[Optional[_builtins.int]] = None,
                  type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -174,6 +221,7 @@ class Environment(pulumi.CustomResource):
             __props__ = EnvironmentArgs.__new__(EnvironmentArgs)
 
             __props__.__dict__["name"] = name
+            __props__.__dict__["required_approvals"] = required_approvals
             if type is None and not opts.urn:
                 raise TypeError("Missing required property 'type'")
             __props__.__dict__["type"] = type
@@ -188,6 +236,7 @@ class Environment(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
+            required_approvals: pulumi.Input[Optional[_builtins.int]] = None,
             type: pulumi.Input[Optional[_builtins.str]] = None) -> 'Environment':
         """
         Get an existing Environment resource's state with the given name, id, and optional extra
@@ -197,6 +246,7 @@ class Environment(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
+        :param pulumi.Input[_builtins.int] required_approvals: The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
         :param pulumi.Input[_builtins.str] type: The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -204,6 +254,7 @@ class Environment(pulumi.CustomResource):
         __props__ = _EnvironmentState.__new__(_EnvironmentState)
 
         __props__.__dict__["name"] = name
+        __props__.__dict__["required_approvals"] = required_approvals
         __props__.__dict__["type"] = type
         return Environment(resource_name, opts=opts, __props__=__props__)
 
@@ -214,6 +265,14 @@ class Environment(pulumi.CustomResource):
         The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="requiredApprovals")
+    def required_approvals(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+        """
+        return pulumi.get(self, "required_approvals")
 
     @_builtins.property
     @pulumi.getter

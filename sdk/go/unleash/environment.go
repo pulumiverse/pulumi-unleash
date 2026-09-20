@@ -35,6 +35,16 @@ import (
 //			if err != nil {
 //				return err
 //			}
+//			// Preconfigure environment level change requests: every project using this
+//			// environment inherits the requirement of two approvals per change request.
+//			_, err = unleash.NewEnvironment(ctx, "space_station", &unleash.EnvironmentArgs{
+//				Name:              pulumi.String("space-station"),
+//				Type:              pulumi.String("production"),
+//				RequiredApprovals: pulumi.Int(2),
+//			})
+//			if err != nil {
+//				return err
+//			}
 //			return nil
 //		})
 //	}
@@ -45,6 +55,8 @@ type Environment struct {
 
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+	RequiredApprovals pulumi.IntPtrOutput `pulumi:"requiredApprovals"`
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type pulumi.StringOutput `pulumi:"type"`
 }
@@ -84,6 +96,8 @@ func GetEnvironment(ctx *pulumi.Context,
 type environmentState struct {
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 	Name *string `pulumi:"name"`
+	// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+	RequiredApprovals *int `pulumi:"requiredApprovals"`
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type *string `pulumi:"type"`
 }
@@ -91,6 +105,8 @@ type environmentState struct {
 type EnvironmentState struct {
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 	Name pulumi.StringPtrInput
+	// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+	RequiredApprovals pulumi.IntPtrInput
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type pulumi.StringPtrInput
 }
@@ -102,6 +118,8 @@ func (EnvironmentState) ElementType() reflect.Type {
 type environmentArgs struct {
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 	Name *string `pulumi:"name"`
+	// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+	RequiredApprovals *int `pulumi:"requiredApprovals"`
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type string `pulumi:"type"`
 }
@@ -110,6 +128,8 @@ type environmentArgs struct {
 type EnvironmentArgs struct {
 	// The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 	Name pulumi.StringPtrInput
+	// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+	RequiredApprovals pulumi.IntPtrInput
 	// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
 	Type pulumi.StringInput
 }
@@ -204,6 +224,11 @@ func (o EnvironmentOutput) ToEnvironmentOutputWithContext(ctx context.Context) E
 // The name of the environment. Must be a URL-friendly string according to RFC 3968. Changing this property will require the resource to be replaced, it's generally safer to remove this resource and create a new one.
 func (o EnvironmentOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Environment) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// The number of approvals a change request must collect before it can be applied in this environment. Setting it turns on environment-level change requests, and every project that uses this environment inherits the value. Projects can still override it unless they have no members allowed to update the project. Leave it unset to not preconfigure change requests for this environment. Requires Unleash Enterprise 6.10 or later.
+func (o EnvironmentOutput) RequiredApprovals() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Environment) pulumi.IntPtrOutput { return v.RequiredApprovals }).(pulumi.IntPtrOutput)
 }
 
 // The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.

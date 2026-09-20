@@ -38,6 +38,10 @@ export interface GetEnvironmentResult {
      */
     readonly name: string;
     /**
+     * The number of approvals a change request must collect before it can be applied in this environment. Set when the environment turns on environment-level change requests, null otherwise. Use the required*approvals attribute of the unleash*environment resource to configure it.
+     */
+    readonly requiredApprovals: number;
+    /**
      * The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
      */
     readonly type: string;

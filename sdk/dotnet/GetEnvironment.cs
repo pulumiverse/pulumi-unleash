@@ -81,6 +81,10 @@ namespace Pulumiverse.Unleash
         /// </summary>
         public readonly string Name;
         /// <summary>
+        /// The number of approvals a change request must collect before it can be applied in this environment. Set when the environment turns on environment-level change requests, null otherwise. Use the required*approvals attribute of the unleash*environment resource to configure it.
+        /// </summary>
+        public readonly int RequiredApprovals;
+        /// <summary>
         /// The type of the environment. Unleash recognizes 'development', 'test', 'preproduction' and 'production'. You can pass other values and Unleash will accept them but they will carry no special semantics.
         /// </summary>
         public readonly string Type;
@@ -89,9 +93,12 @@ namespace Pulumiverse.Unleash
         private GetEnvironmentResult(
             string name,
 
+            int requiredApprovals,
+
             string type)
         {
             Name = name;
+            RequiredApprovals = requiredApprovals;
             Type = type;
         }
     }
